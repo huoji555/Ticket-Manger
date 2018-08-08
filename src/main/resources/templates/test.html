@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Page</title>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+<h1>Test Page</h1><br>
+<div>kokkokokokokokokokokookk</div>
+<button type="button" onclick="test()">click</button>
+
+<script>
+
+ function test() {
+    var adata = {"testData":"xxxx"};
+    var data = JSON.stringify(adata);
+
+    $.ajax({
+        type:"post",
+        dataType:"json",
+        data:data,
+        contentType:"application/json",
+        url:"/student/save",
+
+        success: function (data) {
+            if (data.a == "1"){
+                alert("保存成功");
+            }
+        }
+
+    });
+
+ }
+
+
+</script>
+
+
+
+</body>
+</html>

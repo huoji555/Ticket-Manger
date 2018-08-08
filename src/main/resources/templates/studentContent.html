@@ -1,0 +1,42 @@
+<!--姓名: <input type="text" ng-model="testStudent.name"><br>
+信息: <input type="text" ng-model="testStudent.info"><br>
+爱好: <input type="text" ng-model="testStudent.hobby"><br>
+性别: <input type="text" ng-model="testStudent.sex"><br>
+<button ng-click= " save(testStudent) ">保存</button><br>
+查询区：<input type="text" ng-model="queryMsg"> <button ng-click="queryMessage()">查询</button><br>
+显示区:<br>
+{{message.name+"|"+message.info+"|"+message.sex+"|"+message.hobby}}<br>-->
+
+
+<button ng-click="huhu()">trytrytry</button>
+
+
+
+
+
+
+
+
+<!-- 模态框 -->
+<div class="modal fade" id="kpokpo" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">修改信息</h4>
+            </div>
+            <div class="modal-body">
+                <br>
+                姓名:<input type="text" ng-model="cc.name" disabled="disabled"><br>
+                信息:<input type="text" ng-model="cc.info"><br>
+                爱好:<input type="text" ng-model="cc.hobby"><br>
+                性别:<input type="text" ng-model="cc.sex"><br>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" ng-click="update(cc)">修改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

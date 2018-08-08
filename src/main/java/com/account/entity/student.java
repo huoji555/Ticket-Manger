@@ -1,0 +1,56 @@
+package com.account.entity;
+
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name="student")
+@DynamicInsert(true)
+@DynamicUpdate(true)
+public class student implements Serializable{
+
+	private static final long serialVersionUID = -6492081752357420965L;
+	private int     id;
+	private String  name;
+	private String  password;
+	
+	
+	@Id
+	@GeneratedValue(generator="a_native")
+	@GenericGenerator(name="a_native",strategy="native")
+	@Column(name="id")
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	@Column(name="name")
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	@Column(name="password")
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "student [id=" + id + ", name=" + name + ", password="
+				+ password + "]";
+	}
+	
+
+}
