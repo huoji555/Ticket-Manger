@@ -28,7 +28,7 @@ import java.util.Map;
 @EnableJpaRepositories(
         entityManagerFactoryRef="entityManagerFactoryPrimary",
         transactionManagerRef="transactionManagerPrimary",
-        basePackages= { "com.account.dao"}) //设置Repository所在位置
+        basePackages= { "com.account.repository"}) //设置Repository所在位置
 public class PrimaryDataSouceConfig {
 	
 	@Autowired 

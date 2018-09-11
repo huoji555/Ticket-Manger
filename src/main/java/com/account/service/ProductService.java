@@ -1,9 +1,12 @@
 package com.account.service;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/24 08:47
- * @Description:
- */
+import com.account.entity.Product;
+
+import java.util.List;
+
 public interface ProductService {
+
+
+  List<Product> getAll();
+
 }

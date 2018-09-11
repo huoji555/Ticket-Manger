@@ -1,10 +1,36 @@
-<table class='table table-responsive-xl table-striped table-bordered table-hover'>
-    <thead><tr><th>交易类型</th><th>票据类型</th><th>最小利率</th><th>最大利率</th><th>日期</th></tr></thead>
 
-    <tr><td>{{334}}</td></tr>
-    <tr><td>{{44}}</td></tr>
-    <tr><td>{{334}}</td></tr>
-    <tr><td>{{44}}</td></tr>
-    <tr><td>{{334}}</td></tr>
+<!-- 查询组 -->
+<div class="row">
+    <div class="form-group col-sm-11">
+        <input type="text" class="form-control" placeholder="查询日期" id="calendar"/>
+    </div>
+    <div class="form-group col-sm-1">
+        <span class="input-group-append">
+        <button type="button" class="btn btn-primary" ng-click="queryByDate()">查询</button>
+    </span>
+</div>
+
+<!-- 表格组 -->
+<table class='table table-responsive-xl table-striped table-bordered table-hover'>
+    <thead><tr><th>交易类型</th><th>票据类型</th><th>最小利率（%）</th><th>最大利率（%）</th><th>日期</th></tr></thead>
+
+    <tr ng-repeat="list in lists">
+        <td>{{list.tradeType}}</td>
+        <td>{{list.ticketType}}</td>
+        <td>{{list.minRate | number:2}}</td>
+        <td>{{list.maxRate | number:2}}</td>
+        <td>{{list.date | date:'yyyy-MM-dd'}}</td>
+    </tr>
 
 </table>
+
+
+<!-- 日历脚本 -->
+<script>
+
+    laydate.render({
+        elem: '#calendar'
+        ,theme: '#393D49'
+    });
+
+</script>

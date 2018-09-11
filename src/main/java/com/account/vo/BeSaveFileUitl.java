@@ -1,4 +1,4 @@
-package com.hwj.entityUtil;
+package com.account.vo;
 
 import java.util.Arrays;
 

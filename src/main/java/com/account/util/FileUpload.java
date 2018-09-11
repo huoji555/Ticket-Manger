@@ -1,16 +1,12 @@
-package com.hwj.tools;
+package com.account.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import com.account.vo.BeSaveFileUitl;
 import org.springframework.stereotype.Component;
-
-
-
-import com.hwj.entityUtil.BeSaveFileUitl;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 public class FileUpload {

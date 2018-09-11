@@ -1,9 +1,8 @@
 package com.account.repository;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/24 08:46
- * @Description:
- */
-public class ProductRepository {
+import com.account.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product,String> {
+
 }

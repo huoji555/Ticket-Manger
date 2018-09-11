@@ -1,4 +1,4 @@
-package com.xingyoucai.smartloan.vo;
+package com.account.util;
 
 import lombok.Data;
 

@@ -1,9 +1,16 @@
 package com.account.service;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/8 17:07
- * @Description:
- */
-public class AdminService {
+import com.account.entity.Admin;
+
+
+public interface AdminService {
+
+    void save(Admin admin);
+
+    Admin queryAdminByPhone(String phoneNumber);
+
+    Admin queryAdminByPhoneOrCompany(String phoneNumber,String company);
+
+    int hasMatchAdmin(String phoneNumber,String password);
+
 }

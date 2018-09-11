@@ -1,6 +1,6 @@
 package com.account.controller;
 
-import com.account.service.IStudentService;
+import com.account.service.StudentService;
 import com.account.util.JsonAnalyze;
 import com.account.util.StatusMap;
 import com.account.entity.student;
@@ -24,7 +24,7 @@ public class TestController {
     @Autowired
     private StatusMap statusMap;
     @Autowired
-    private IStudentService studentService;
+    private StudentService studentService;
 
 
     @PostMapping("/save")

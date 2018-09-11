@@ -1,9 +1,11 @@
 package com.account.service;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/21 16:54
- * @Description:
- */
+import com.account.entity.Bank;
+
 public interface BankService {
+
+    Bank queryBankByName(String bankName);
+
+    Bank queryFirstBank(String bankName);
+
 }

@@ -1,9 +1,16 @@
 package com.account.service;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/21 17:21
- * @Description:
- */
-public class TradeService {
+import com.account.entity.Trade;
+
+import java.util.Date;
+import java.util.List;
+
+public interface TradeService {
+
+    Trade queryTrade(Date date, String ticketType, String tradeType);
+
+    Trade queryTradeByDateAndTradeType(Date date,String tradeType);
+
+    List<Trade> queryListByDate(Date date);
+
 }

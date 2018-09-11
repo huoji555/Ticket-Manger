@@ -1,9 +1,11 @@
 package com.account.service;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/27 15:30
- * @Description:
- */
+import com.account.entity.TicketDiscount;
+
 public interface TicketDiscountService {
+
+    void save(TicketDiscount ticketDiscount);
+
+    TicketDiscount queryTicketDiscountByTicketNumber(String ticketNumber);
+
 }

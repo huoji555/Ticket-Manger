@@ -1,9 +1,12 @@
 package com.account.repository;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/10 10:47
- * @Description:
- */
-public interface AuditingRepository {
+import com.account.entity.Auditing;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(path = "auditing")
+public interface AuditingRepository extends JpaRepository<Auditing,String> {
+
+    Auditing queryAuditingByPhone(String phone);
+
 }

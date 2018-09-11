@@ -1,10 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="card">
+            <div class="card-header">
+                <i class="icon-drop"></i> 审核资料上传({{generalSituation}})</div>
+                <div class="card-body">
+
+                    <table class="table table-responsive-lg table-bordered table-striped table-lg">
+                        <thead>
+                        <tr>
+                            <th>资料名称</th>
+                            <th>审核状态</th>
+                            <th>文件上传</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>企业营业执照</td>
+                            <td>
+                                <span class="badge badge-info" ng-if='list.busStatus == "" || list.busStatus == null'>未提交</span>
+                                <span class="badge badge-danger" ng-if="list.busStatus == '0' ">审核中</span>
+                                <span class="badge badge-success" ng-if="list.busStatus == '1' ">审核通过</span>
+                                <span class="badge badge-danger" ng-if='!(list.busStatus == "" || list.busStatus == null || list.busStatus == "0" || list.busStatus == "1")'>{{"未通过:  "+list.busStatus}}</span>
+                            </td>
+                            <td>
+                                <input type="file" id="file0" title="上传附件">
+                                <input style="display:none" />
+                                <button ng-click="upload(0)" type="button" class="btn btn-success btn-sm">上传</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>公司章程</td>
+                            <td>
+                                <span class="badge badge-info" ng-if='list.conStatus == "" || list.conStatus == null'>未提交</span>
+                                <span class="badge badge-danger" ng-if="list.conStatus == '0' ">审核中</span>
+                                <span class="badge badge-success" ng-if="list.conStatus == '1' ">审核通过</span>
+                                <span class="badge badge-danger" ng-if='!(list.conStatus == "" || list.conStatus == null || list.conStatus == "0" || list.conStatus == "1")'>{{"未通过:  "+list.conStatus}}</span>
+                            </td>
+                            <td>
+                                <input type="file" id="file1" title="上传附件">
+                                <input style="display:none" />
+                                <button ng-click="upload(1)" type="button" class="btn btn-success btn-sm">上传</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>组织机构代码证</td>
+                            <td>
+                                <span class="badge badge-info" ng-if='list.orgStatus == "" || list.orgStatus == null'>未提交</span>
+                                <span class="badge badge-danger" ng-if="list.orgStatus == '0' ">审核中</span>
+                                <span class="badge badge-success" ng-if="list.orgStatus == '1' ">审核通过</span>
+                                <span class="badge badge-danger" ng-if='!(list.orgStatus == "" || list.orgStatus == null || list.orgStatus == "0" || list.orgStatus == "1")'>{{"未通过:  "+list.orgStatus}}</span>
+                            </td>
+                            <td>
+                                <input type="file" id="file2" title="上传附件">
+                                <input style="display:none" />
+                                <button ng-click="upload(2)" type="button" class="btn btn-success btn-sm">上传</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>法人身份证</td>
+                            <td>
+                                <span class="badge badge-info" ng-if='list.idcStatus == "" || list.idcStatus == null'>未提交</span>
+                                <span class="badge badge-danger" ng-if="list.idcStatus == '0' ">审核中</span>
+                                <span class="badge badge-success" ng-if="list.idcStatus == '1' ">审核通过</span>
+                                <span class="badge badge-danger" ng-if='!(list.idcStatus == "" || list.idcStatus == null || list.idcStatus == "0" || list.idcStatus == "1")'>{{"未通过:  "+list.idcStatus}}</span>
+                            </td>
+                            <td>
+                                <input type="file" id="file3" title="上传附件">
+                                <input style="display:none" />
+                                <button ng-click="upload(3)" type="button" class="btn btn-success btn-sm">上传</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>授权书</td>
+                            <td>
+                                <span class="badge badge-info" ng-if='list.autStatus == "" || list.autStatus == null'>未提交</span>
+                                <span class="badge badge-danger" ng-if="list.autStatus == '0' ">审核中</span>
+                                <span class="badge badge-success" ng-if="list.autStatus == '1' ">审核通过</span>
+                                <span class="badge badge-danger" ng-if='!(list.autStatus == "" || list.autStatus == null || list.autStatus == "0" || list.autStatus == "1")'>{{"未通过:  "+list.autStatus}}</span>
+                            </td>
+                            <td>
+                                <input type="file" id="file4" title="上传附件">
+                                <input style="display:none" />
+                                <button ng-click="upload(4)" type="button" class="btn btn-success btn-sm">上传</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+        </div>
+    </div>
+</div>

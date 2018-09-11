@@ -1,9 +1,12 @@
 package com.account.repository;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/20 13:34
- * @Description:
- */
-public class BankRepository {
+import com.account.entity.Bank;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BankRepository extends JpaRepository<Bank,String> {
+
+    Bank queryBankByBankName(String bankName);
+
+    Bank queryFirstByBankName(String bankName);
+
 }

@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableTransactionManagement     //开启事物注解
 @EnableCaching                   //开启缓存
 public class AccountApplication extends SpringBootServletInitializer {
 

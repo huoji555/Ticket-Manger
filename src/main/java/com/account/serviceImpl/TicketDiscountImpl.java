@@ -1,9 +1,25 @@
 package com.account.serviceImpl;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/27 15:31
- * @Description:
- */
-public class TicketDiscountImpl {
+import com.account.entity.TicketDiscount;
+import com.account.repository.TicketDiscountRepository;
+import com.account.service.TicketDiscountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TicketDiscountImpl implements TicketDiscountService {
+
+    @Autowired
+    private TicketDiscountRepository ticketDiscountRepository;
+
+
+    @Override
+    public void save(TicketDiscount ticketDiscount) {
+        ticketDiscountRepository.save(ticketDiscount);
+    }
+
+    @Override
+    public TicketDiscount queryTicketDiscountByTicketNumber(String ticketNumber) {
+        return ticketDiscountRepository.queryTicketDicount(ticketNumber);
+    }
 }

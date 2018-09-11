@@ -1,10 +1,128 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<table class='table table-responsive-xl table-striped table-bordered table-hover'>
+    <thead><tr><th>票据号码</th><th>票面金额</th><th>票据类型</th><th>票据名称</th><th>不可转让标识</th><th>出票日期</th><th>到期日期</th><th>出票人名称</th><th>承兑人名称</th><th>票据状态</th><th>贴现状态</th><th>操作</th><th>交易</th></tr></thead>
+    <tbody>
+
+    <tr ng-repeat="list in lists">
+        <td>{{list.ticketNumber}}</td>
+        <td>{{list.ticketAmount}}</td>
+        <td>{{list.ticketType}}</td>
+        <td>{{list.ticketName}}</td>
+        <td>{{list.nonTransferLogo}}</td>
+        <td>{{list.ticketingTime | date:'yyyy-MM-dd'}}</td>
+        <td>{{list.maturityTime | date:'yyyy-MM-dd'}}</td>
+        <td>{{list.billerName}}</td>
+        <td>{{list.acceptorName}}</td>
+        <td>{{list.ticketStatus}}</td>
+        <td ng-if="list.discountStatus == 0">未贴现</td>
+        <td ng-if="list.discountStatus == 1">已贴现</td>
+        <td><a data-target="#kpokpo" data-toggle="modal" ng-click="show(list)" class="badge badge-success">查看</a></td>
+        <td><a data-target="#discount" data-toggle="modal" ng-click="show(list)" class="badge badge-warning">贴现</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" ng-click="page(currPage,'first')" disabled="disabled">
+                <span aria-hidden="true">首页</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" ng-click="page(currPage,'up')">上一页</a></li>
+        <li class="page-item"><a class="page-link" ng-click="page(currPage,'next')">下一页</a></li>
+        <li class="page-item">
+            <a class="page-link" ng-click="page(pages,'last');" aria-label="Next">
+                <span aria-hidden="true">末页</span>
+            </a>
+        </li>
+        <li style="margin-top: 0.6%; margin-left: 5%;">
+            <span>第{{currPage+1}}页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>共{{pages}}页</span>
+        </li>
+    </ul>
+
+
+
+
+
+
+<!-- 显示信息模态框 -->
+<div class="modal fade" id="kpokpo" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-warning modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">显示信息</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <table class='table table-responsive-xl table-striped table-bordered table-hover'>
+                    <tr><td>票据号码</td><td>{{ticketNumber}}</td><td>票面金额</td><td>{{ticketAmount}}</td><td>票据类型</td><td>{{ticketType}}</td></tr>
+                    <tr><td>票据名称</td><td>{{ticketName}}</td><td>不可转让标识</td><td>{{nonTransferLogo}}</td><td>不可转让标识名称</td><td>{{nonTransferLogoName}}</td></tr>
+                    <tr><td>出票时间</td><td>{{ticketingTime | date:'yyyy-MM-dd'}}</td><td>到期时间</td><td>{{maturityTime | date:'yyyy-MM-dd'}}</td><td>贴现方</td><td>{{discount.discountParty}}</td></tr>
+                    <tr><td>收票人名称</td><td>{{invoiceName}}</td><td>承兑人名称</td><td>{{acceptorName}}</td><td>贴现价格</td><td>{{discount.discountPreice}}</td></tr>
+                    <tr><td>下手持票人名称</td><td>{{handheldName}}</td><td>下手持票人账号</td><td>{{handheldAccountNumber}}</td><td>贴现金额</td><td>{{discount.discountAmount}}</td></tr>
+                    <tr><td>本手持票人名称</td><td>{{originalHandheldName}}</td><td>本手持票人行号</td><td>{{originalHandheldBankNumber}}</td><td>手续费</td><td>{{discount.commission}}</td></tr>
+                    <tr><td>出票人名称</td><td>{{billerName}}</td><td>下手持票人行号</td><td>{{handheldBankNumber}}</td><td>贴现日期</td><td>{{discount.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td></tr>
+                    <tr><td>票据状态</td><td>{{ticketStatus}}</td><td>在池状态</td><td>{{poolStatus}}</td><td></td><td></td></tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!-- 贴现模态框 -->
+<div class="modal fade" id="discount" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-warning modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">贴现信息</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label>贴现方</label>
+                        <input type="text" class="form-control" ng-model="discount.discountParty" placeholder="贴现方" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>贴现价格</label>
+                        <input type="text" class="form-control" ng-model="discount.discountPreice" placeholder="贴现价格" />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>贴现金额</label>
+                        <input type="text" class="form-control" ng-model="discount.discountAmount" placeholder="贴现金额" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>手续费</label>
+                        <input type="text" class="form-control" ng-model="discount.commission" placeholder="手续费" />
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>贴现日期</label>
+                        <input type="text" class="form-control" placeholder="贴现日期" value="{{discount.createDate | date:'yyyy-MM-dd HH:mm:ss'}}" disabled/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-info" ng-click="save(discount)">录入数据</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

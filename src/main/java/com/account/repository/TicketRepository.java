@@ -1,9 +1,13 @@
 package com.account.repository;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/15 14:35
- * @Description:
- */
-public interface TicketRepository {
+import com.account.entity.Ticket;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(path = "ticket")
+public interface TicketRepository extends PagingAndSortingRepository<Ticket,String>, JpaSpecificationExecutor<Ticket> {
+
+  Ticket queryTicketByTicketNumber(String ticketNumber);
+
 }

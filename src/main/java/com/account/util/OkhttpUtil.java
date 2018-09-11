@@ -1,24 +1,10 @@
-package com.xingyoucai.smartloan.util;
+package com.account.util;
 
-import com.alibaba.fastjson.JSON;
-import com.xingyoucai.smartloan.entity.Ticket;
-import com.xingyoucai.smartloan.model.ApiModel;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,7 +16,7 @@ public class OkhttpUtil {
 
 	private static OkHttpClient getClient() {
 		if(client == null){
-			final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+			final OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
 			client = httpBuilder
 					.connectTimeout(60, TimeUnit.SECONDS)
 					.writeTimeout(60, TimeUnit.SECONDS)
@@ -41,7 +27,7 @@ public class OkhttpUtil {
 		return client;
 	}
 
-	public static Object call(String url,String params) throws Exception{
+	/*public static Object call(String url,String params) throws Exception{
 
 		RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
 				URLEncoder.encode(params, "UTF-8"));
@@ -57,16 +43,8 @@ public class OkhttpUtil {
 			return validResponse(result);
 		}
 		return "error";
-	}
+	}*/
 
-	private static Object validResponse(String result) throws Exception{
-		ApiModel model = JSON.parseObject(result, ApiModel.class);
-
-		if(model.sigValidate()){
-			return model.getBody();
-		}
-		return "error";
-	}
 
 	public static String get(String url) throws IOException {
 		String result= getClient().newCall(new Request.Builder().url(url).get().build())

@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<table class='table table-responsive-xl table-striped table-bordered table-hover'>
+    <!--<thead><tr><th>信息</th><th>信息</th></tr></thead>-->
+
+    <tr><td>用户账号</td><td>{{list.adminId}}</td></tr>
+    <tr><td>公司</td><td>{{list.company}}</td></tr>
+    <tr><td>企业营业执照</td><td><a data-target="#kpokpo" data-toggle="modal" ng-click="showMessage(list.bussinessLicense,list.busType)" class="badge badge-success">查看</a></td></tr>
+    <tr><td>组织机构代码证</td><td><a data-target="#kpokpo" data-toggle="modal" ng-click="showMessage(list.organizationCode,list.orgType)" class="badge badge-success">查看</a></td></tr>
+    <tr><td>法人身份证</td><td><a data-target="#kpokpo" data-toggle="modal" ng-click="showMessage(list.idCard,list.idcType)" class="badge badge-success">查看</a></td></tr>
+    <tr><td>授权书</td><td><a data-target="#kpokpo" data-toggle="modal" ng-click="showMessage(list.authorization,list.autType)" class="badge badge-success">查看</a></td></tr>
+    <tr><td>公司章程</td><td><a ng-click="download(list.constitution)" class="badge badge-success">下载</a></td></tr>
+
+</table>
+
+
+
+<!--资料显示模态框-->
+<div class="modal fade" id="kpokpo" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-warning modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">图片信息</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <img src="{{message}}" style="width: 600px; height: 750px">
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

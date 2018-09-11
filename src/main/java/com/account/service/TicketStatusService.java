@@ -1,9 +1,10 @@
 package com.account.service;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/23 16:22
- * @Description:
- */
+
+import com.account.entity.TicketStatus;
+
 public interface TicketStatusService {
+
+    TicketStatus queryTicketStatusByCode(String code);
+
 }

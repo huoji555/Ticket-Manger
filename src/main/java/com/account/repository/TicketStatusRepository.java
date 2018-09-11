@@ -1,9 +1,11 @@
 package com.account.repository;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/23 16:17
- * @Description:
- */
-public class TicketStatusRepository {
+import com.account.entity.TicketStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TicketStatusRepository extends JpaRepository<TicketStatus,String> {
+
+
+   TicketStatus queryTicketStatusByTicketStatusCode(String ticketStatusCode);
+
 }

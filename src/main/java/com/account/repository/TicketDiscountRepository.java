@@ -1,9 +1,12 @@
 package com.account.repository;
 
-/**
- * @Auther: Ragty
- * @Date: 2018/8/27 14:57
- * @Description:
- */
-public interface TicketDiscountRepository {
+import com.account.entity.TicketDiscount;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface TicketDiscountRepository extends JpaRepository<TicketDiscount,String> {
+
+   @Query(value = "select * from ticket_discount  td where td.ticket_number = ?1 order by create_date desc limit 1",nativeQuery = true)
+   TicketDiscount queryTicketDicount(String ticketNumber);
+
 }

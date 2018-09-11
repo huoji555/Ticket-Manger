@@ -1,10 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!-- 查询组 -->
+<div class="row">
+    <div class="form-group col-sm-4">
+        <label>票据号码</label>
+        <input type="text" class="form-control" ng-model="queryNumber" placeholder="票据号码" />
+    </div>
+    <div class="form-group col-sm-3">
+        <label>票据类型</label>
+        <select id="ticketType" class="form-control">
+            <option>全部</option>
+            <option>银承</option>
+            <option>商承</option>
+        </select>
+    </div>
+    <div class="form-group col-sm-4">
+        <label>出票人名称</label>
+        <input type="text" class="form-control" ng-model="billerName1" placeholder="出票人名称" />
+    </div>
+    <div class="form-group col-sm-1">
+        <label>查询</label>
+        <span class="input-group-append">
+        <button type="button" class="btn btn-primary" ng-click="queryTicket(0,20)">查询</button>
+    </span>
+    </div>
+
+</div>
+
+<!-- 上传组 -->
+<div class="row form-group">
+    <label class="col-md-1 col-form-label">票据上传</label>
+    <div class="col-md-2">
+        <input type="file" id="file" title="票据上传">
+    </div>
+    <div class="col-md-1">
+        <button ng-click="upload()" class="btn btn-success btn-sm">上传</button>
+    </div>
+
+</div>
+
+
+<table class="table table-responsive-xl table-striped table-bordered table-hover">
+    <thead><tr><th>票据号码</th><th>票面金额</th><th>票据类型</th><th>票据名称</th><th>不可转让标识</th><th>出票日期</th><th>到期日期</th><th>出票人名称</th><th>承兑人名称</th><th>票据状态</th><th>操作</th><th>交易</th></tr></thead>
+    <tbody>
+
+    <tr ng-repeat="list in lists">
+        <td>{{list.ticketNumber}}</td>
+        <td>{{list.ticketAmount}}</td>
+        <td>{{list.ticketType}}</td>
+        <td>{{list.ticketName}}</td>
+        <td>{{list.nonTransferLogo}}</td>
+        <td>{{list.ticketingTime | date:'yyyy-MM-dd'}}</td>
+        <td>{{list.maturityTime | date:'yyyy-MM-dd'}}</td>
+        <td>{{list.billerName}}</td>
+        <td>{{list.acceptorName}}</td>
+        <td>{{list.ticketStatus}}</td>
+        <td><a data-target="#kpokpo" data-toggle="modal" ng-click="show(list)" class="badge badge-success">查看</a></td>
+        <td><a data-target="#tradeMessage" data-toggle="modal" ng-click="calculate(list)" class="badge badge-warning">交易</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+    <!-- 默认分页 -->
+    <ul class="pagination justify-content-center" ng-if="!checkQuery">
+        <li class="page-item">
+            <a class="page-link" ng-click="page(currPage,'first')" disabled="disabled" >
+                <span aria-hidden="true">首页</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" ng-click="page(currPage,'up')">上一页</a></li>
+        <li class="page-item"><a class="page-link" ng-click="page(currPage,'next')">下一页</a></li>
+        <li class="page-item">
+            <a class="page-link" ng-click="page(pages,'last');" aria-label="Next">
+                <span aria-hidden="true">末页</span>
+            </a>
+        </li>
+        <li style="margin-top: 0.6%; margin-left: 5%;">
+        <span>第{{currPage+1}}页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>共{{pages}}页</span>
+        </li>
+    </ul>
+
+
+    <!-- 查询分页 -->
+    <ul class="pagination justify-content-center" ng-if="checkQuery">
+        <li class="page-item">
+            <a class="page-link" ng-click="pageQuery(currPage,'first')" disabled="disabled" >
+                <span aria-hidden="true">首页</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" ng-click="pageQuery(currPage,'up')">上一页</a></li>
+        <li class="page-item"><a class="page-link" ng-click="pageQuery(currPage,'next')">下一页</a></li>
+        <li class="page-item">
+            <a class="page-link" ng-click="pageQuery(pages,'last');" aria-label="Next">
+                <span aria-hidden="true">末页</span>
+            </a>
+        </li>
+        <li style="margin-top: 0.6%; margin-left: 5%;">
+            <span>第{{currPage+1}}页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>共{{pages}}页</span>
+        </li>
+    </ul>
+
+
+
+
+
+
+<!-- 显示信息模态框 -->
+<div class="modal fade" id="kpokpo" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-success modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">票据信息</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-responsive-xl table-striped table-bordered table-hover">
+                    <tr><td>票据号码</td><td>{{ticketNumber}}</td><td>票面金额</td><td>{{ticketAmount}}</td><td>票据类型</td><td>{{ticketType}}</td></tr>
+                    <tr><td>票据名称</td><td>{{ticketName}}</td><td>不可转让标识</td><td>{{nonTransferLogo}}</td><td>不可转让标识名称</td><td>{{nonTransferLogoName}}</td></tr>
+                    <tr><td>出票时间</td><td>{{ticketingTime | date:'yyyy-MM-dd'}}</td><td>到期时间</td><td>{{maturityTime | date:'yyyy-MM-dd'}}</td><td>出票人名称</td><td>{{billerName}}</td></tr>
+                    <tr><td>收票人名称</td><td>{{invoiceName}}</td><td>承兑人名称</td><td>{{acceptorName}}</td><td>票据状态</td><td>{{ticketStatus}}</td></tr>
+                    <tr><td>下手持票人名称</td><td>{{handheldName}}</td><td>下手持票人账号</td><td>{{handheldAccountNumber}}</td><td>下手持票人行号</td><td>{{handheldBankNumber}}</td></tr>
+                    <tr><td>本手持票人名称</td><td>{{originalHandheldName}}</td><td>本手持票人行号</td><td>{{originalHandheldBankNumber}}</td><td>在池状态</td><td>{{poolStatus}}</td></tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--交易信息模态框-->
+<div class="modal fade" id="tradeMessage" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-warning modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">交易信息</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class='table table-responsive-xl table-striped table-bordered table-hover' align="middle">
+                    <thead><tr class="success"><th>序号</th><th>交易类型</th><th colspan="2">融资预估</th><th>理财A类(45天)</th><th>理财B类(90天)</th><th>理财C类(180天)</th></tr></thead>
+                    <tbody ng-repeat="list in rateList">
+
+                    <tr>
+                    <td rowspan="2">{{$index+1}}</td>
+                    <td rowspan="2">{{list.tradeType}}</td>
+                        <td>最小值</td><td>{{list.minRate | number:2}}</td><td>{{list.min2323A | number:2}}</td><td>{{list.min2323B | number:2}}</td><td>{{list.min2323C | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>最大值</td><td>{{list.maxRate | number:2}}</td><td>{{list.max2323A | number:2}}</td><td>{{list.max2323B | number:2}}</td><td>{{list.max2323C | number:2}}</td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

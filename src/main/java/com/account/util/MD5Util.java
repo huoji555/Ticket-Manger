@@ -1,26 +1,24 @@
-package com.xingyoucai.smartloan.util;
+package com.account.util;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
+
 /**
  * @author lierlei@xingyoucai.com
  */
+@Component
 public class MD5Util {
-
-	public static void main( String[] args ) {
-		String str = digest("2018yewufa@");
-		System.out.println(str);
-	}
 	
-    public static String digest16(String inStr) {  
+    public  String digest16(String inStr) {
     	return digest(inStr, 16);
 	}
-    public static String digest(String inStr) {  
+    public  String digest(String inStr) {
     	return digest(inStr, 32);
 	}
     
-    private static String digest(String inStr, int rang) {  
+    private String digest(String inStr, int rang) {
 	    MessageDigest md5 = null;  
 	    if (StringUtils.isBlank(inStr)) {
 	    	return "";
