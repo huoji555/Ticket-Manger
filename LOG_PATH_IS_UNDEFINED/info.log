@@ -128,3 +128,10 @@
 2018-09-12 13:50:27.381 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring FrameworkServlet 'dispatcherServlet'
 2018-09-12 13:50:27.382 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -FrameworkServlet 'dispatcherServlet': initialization started
 2018-09-12 13:50:27.413 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -FrameworkServlet 'dispatcherServlet': initialization completed in 31 ms
+2018-09-12 14:12:15.395 [Thread-37] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext -Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@58a4238c: startup date [Wed Sep 12 13:50:04 CST 2018]; root of context hierarchy
+2018-09-12 14:12:15.398 [Thread-37] INFO  o.s.c.s.DefaultLifecycleProcessor -Stopping beans in phase 0
+2018-09-12 14:12:15.401 [Thread-37] INFO  o.s.j.e.a.AnnotationMBeanExporter -Unregistering JMX-exposed beans on shutdown
+2018-09-12 14:12:15.401 [Thread-37] INFO  o.s.j.e.a.AnnotationMBeanExporter -Unregistering JMX-exposed beans
+2018-09-12 14:12:15.408 [Thread-37] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Closing JPA EntityManagerFactory for persistence unit 'primaryPersistenceUnit'
+2018-09-12 14:12:15.409 [Thread-37] INFO  com.zaxxer.hikari.pool.HikariPool -HikariPool-1 - Close initiated...
+2018-09-12 14:12:15.411 [Thread-37] INFO  com.zaxxer.hikari.pool.HikariPool -HikariPool-1 - Closed.
