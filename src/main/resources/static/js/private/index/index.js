@@ -1,11 +1,11 @@
 var indexApp = angular.module('index',['ngRoute']);
 
 indexApp.config(['$routeProvider',function ($routeProvider) {
-    $routeProvider.when('/',{templateUrl:"html/index/indexContent.html",controller:indexController})
+    $routeProvider.when('/',{templateUrl:"html/Index/indexContent.html",controller:indexController})
                   .when('/ticketUpload',{templateUrl:"html/Ticket/ticketUploadContent.html",controller:ticketUploadController})
                   .when('/ticketDiscount',{templateUrl:"html/Ticket/ticketDiscountContent.html",controller:ticketDiscountController})
                   .when('/adminMessage',{templateUrl:"html/Admin/adminMessage.html",controller:adminMessageController})
-                  .when('/tradeMessage',{templateUrl:"html/Trade/tradeMessage.html",controller:tradeMessageController})
+                  .when('/tradeMessage',{templateUrl:"html/Trade/TradeMessage.html",controller:tradeMessageController})
 }]);
 
 
