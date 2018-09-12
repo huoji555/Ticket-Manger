@@ -25,7 +25,8 @@
                             <td>
                                 <input type="file" id="file0" title="上传附件">
                                 <input style="display:none" />
-                                <button ng-click="upload(0)" type="button" class="btn btn-success btn-sm">上传</button>
+                                <button ng-click="upload(0)" type="button" class="btn btn-success btn-sm" ng-if="!(list.busStatus == '0' || list.busStatus == '1') ">上传</button>
+                                <button ng-click="upload(0)" type="button" class="btn btn-success btn-sm" ng-if="list.busStatus == '0' || list.busStatus == '1' " disabled>上传</button>
                             </td>
                         </tr>
                         <tr>
@@ -39,7 +40,8 @@
                             <td>
                                 <input type="file" id="file1" title="上传附件">
                                 <input style="display:none" />
-                                <button ng-click="upload(1)" type="button" class="btn btn-success btn-sm">上传</button>
+                                <button ng-click="upload(1)" type="button" class="btn btn-success btn-sm" ng-if="!(list.conStatus == '0' || list.conStatus == '1')">上传</button>
+                                <button ng-click="upload(1)" type="button" class="btn btn-success btn-sm" ng-if="list.conStatus == '0' || list.conStatus == '1'" disabled>上传</button>
                             </td>
                         </tr>
                         <tr>
@@ -53,7 +55,8 @@
                             <td>
                                 <input type="file" id="file2" title="上传附件">
                                 <input style="display:none" />
-                                <button ng-click="upload(2)" type="button" class="btn btn-success btn-sm">上传</button>
+                                <button ng-click="upload(2)" type="button" class="btn btn-success btn-sm" ng-if="!(list.orgStatus == '0' || list.orgStatus == '1')">上传</button>
+                                <button ng-click="upload(2)" type="button" class="btn btn-success btn-sm" ng-if="list.orgStatus == '0' || list.orgStatus == '1'" disabled>上传</button>
                             </td>
                         </tr>
                         <tr>
@@ -67,7 +70,8 @@
                             <td>
                                 <input type="file" id="file3" title="上传附件">
                                 <input style="display:none" />
-                                <button ng-click="upload(3)" type="button" class="btn btn-success btn-sm">上传</button>
+                                <button ng-click="upload(3)" type="button" class="btn btn-success btn-sm" ng-if="!(list.idcStatus == '0' || list.idcStatus == '1')">上传</button>
+                                <button ng-click="upload(3)" type="button" class="btn btn-success btn-sm" ng-if="list.idcStatus == '0' || list.idcStatus == '1'" disabled>上传</button>
                             </td>
                         </tr>
                         <tr>
@@ -81,7 +85,8 @@
                             <td>
                                 <input type="file" id="file4" title="上传附件">
                                 <input style="display:none" />
-                                <button ng-click="upload(4)" type="button" class="btn btn-success btn-sm">上传</button>
+                                <button ng-click="upload(4)" type="button" class="btn btn-success btn-sm" ng-if="!(list.autStatus == '0' || list.autStatus == '1')">上传</button>
+                                <button ng-click="upload(4)" type="button" class="btn btn-success btn-sm" ng-if="list.autStatus == '0' || list.autStatus == '1'" disabled>上传</button>
                             </td>
                         </tr>
                         </tbody>
