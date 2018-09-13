@@ -10,4 +10,6 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket,Stri
 
   Ticket queryTicketByTicketNumber(String ticketNumber);
 
+  Ticket queryTicketByTicketNumberAndUploader(String ticketNumber,String uploder);
+
 }

@@ -54,6 +54,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public Ticket queryTicketByTicketNumberAndUploader(String ticketNumber, String uploder) {
+        return ticketRepository.queryTicketByTicketNumberAndUploader(ticketNumber,uploder);
+    }
+
+    @Override
     public Page<Ticket> queryTicket(Integer page,Integer size,String ticketNumber,String ticketName,String billerName,String uploader) {
 
         PageRequest pageRequest = new PageRequest(page,size);

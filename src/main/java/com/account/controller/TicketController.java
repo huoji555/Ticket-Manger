@@ -98,12 +98,6 @@ public class TicketController {
         String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1,file.getOriginalFilename().length()).toLowerCase();
         String fileURL = excelPath;
 
-        System.out.println("-------------------------");
-        System.out.println(fileURL);
-        System.out.println(excelPath);
-        System.out.println(fileURL == excelPath);
-        System.out.println("-------------------------");
-
         BeSaveFileUitl be = new BeSaveFileUitl();
         be.setFileExtension(fileExtension);
         be.setFilesByte(newsPageByte);
@@ -123,6 +117,9 @@ public class TicketController {
             String URL = string[1];
             Url1 = URL.replaceAll("\\\\", "/") + "." + fileExtension;
         }
+        System.out.println("-------------------");
+        System.out.println(Url1);
+        System.out.println("-------------------");
         File fileAfter = new File(Url1);
 
 
@@ -147,16 +144,17 @@ public class TicketController {
             for (Map.Entry<String,Object> entry : map.entrySet()){
                 String head = entry.getKey().trim();
                 String content = entry.getValue().toString().trim();
-                ticket = filling(head,content,ticket);
+                ticket = filling(head,content,ticket,adminId);
             }
 
-            if ( ticket.getTicketNumber() != null ) {
-                ticketService.save(ticket);
-            }
+
+            ticketService.save(ticket);
+
 
         }
 
         if (fileAfter.exists()){
+            System.out.println("存在");
             fileAfter.delete();
         }
 
@@ -175,13 +173,13 @@ public class TicketController {
      * @param ticket
      * @return
      */
-    public Ticket filling(String key,String val,Ticket ticket) throws Exception{
+    public Ticket filling(String key,String val,Ticket ticket,String uploader) throws Exception{
 
 
         if (key == "票据号码" || key.equals("票据号码")){
-            if (ticketService.queryTicketByNumber(val) != null) {
+            if (ticketService.queryTicketByTicketNumberAndUploader(val,uploader) != null) {
                 //return ticket;
-                ticket = ticketService.queryTicketByNumber(val);
+                ticket = ticketService.queryTicketByTicketNumberAndUploader(val,uploader);
             }
             ticket.setTicketNumber(val);
         } else if(key == "票面金额" || key.equals("票面金额")){

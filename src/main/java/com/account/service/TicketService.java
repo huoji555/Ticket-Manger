@@ -11,6 +11,8 @@ public interface TicketService {
 
     Ticket queryTicketByNumber(String ticketNumber);                //根据票据号码，查询票据
 
+    Ticket queryTicketByTicketNumberAndUploader(String ticketNumber,String uploder);
+
     Page<Ticket>  queryTicket(Integer page, Integer size, String ticketNumber, String ticketName, String billerName, String uploader);          //票据查询
 
 }
