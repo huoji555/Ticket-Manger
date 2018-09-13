@@ -11,6 +11,7 @@ import com.account.vo.BeSaveFileUitl;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,13 @@ public class AuditingController {
     private AdminService adminService;
     @Autowired
     private FileUpload fileUpload;
+
+    @Value("${upload.file.path}")
+    private String filePath;
+
+    @Value("${upload.file.spiltPath}")
+    private String spiltPath;
+
 
 
     /**
@@ -88,15 +96,15 @@ public class AuditingController {
         //上传分类器
         String fileURL = "";
         if ( type.equals("0") ) {
-            fileURL = "C:\\upload\\"+adminId+"\\BussinessLicense";
+            fileURL = filePath +adminId+"/BussinessLicense";
         } else if ( type.equals("1") ) {
-            fileURL = "C:\\upload\\"+adminId+"\\Constituation";
+            fileURL = filePath +adminId+"/Constituation";
         } else if ( type.equals("2") ) {
-            fileURL = "C:\\upload\\"+adminId+"\\OrganizationCode";
+            fileURL = filePath +adminId+"/OrganizationCode";
         } else if ( type.equals("3") ) {
-            fileURL = "C:\\upload\\"+adminId+"\\IdCard";
+            fileURL = filePath +adminId+"/IdCard";
         } else if ( type.equals("4") ) {
-            fileURL = "C:\\upload\\"+adminId+"\\Authorization";
+            fileURL = filePath +adminId+"/Authorization";
         }
 
 
@@ -117,7 +125,7 @@ public class AuditingController {
             String url = URL.replaceAll("\\\\", "/") + "." + fileExtension;
 
             Url3 = url;
-            Url2 = url.split("C:")[1];   // 文件在服务器中的真实路径，用来删除
+            Url2 = url.split(spiltPath)[1];   // 文件在服务器中的真实路径，用来删除
         }
 
         System.out.println(Url2);

@@ -23,7 +23,7 @@ public class FileUpload {
 		// 以文件的类别作为保存文件的文件夹名
 		File filePackage = new File(fileURL);
 		// 以日期为文件夹名
-		File dateFile = new File(filePackage + "\\" + fileDate);
+		File dateFile = new File(filePackage + "/" + fileDate);
 
 		String[] str = new String[3];
 		// 文件夹已存在,保存文件
@@ -85,7 +85,7 @@ public class FileUpload {
 		String URL = "";
 		try {
 			// 创建流对象
-			fos = new FileOutputStream(fileURL + "\\" + fileDate + "\\"
+			fos = new FileOutputStream(fileURL + "/" + fileDate + "/"
 					+ fileName + "." + fileExtension);
 			System.out.println(fos);
 			// 转换为byte数组
@@ -94,7 +94,7 @@ public class FileUpload {
 			fos.write(b1);
 			System.out.println("写入文件......");
 			status = 1;
-			URL = fileURL + "\\" + fileDate + "\\" + fileName;
+			URL = fileURL + "/" + fileDate + "/" + fileName;
 			System.out.println("URL为：" + URL);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,7 +103,7 @@ public class FileUpload {
 		} finally {
 			try {
 				fos.close();
-				URL = fileURL + "\\" + fileDate + "\\" + fileName;
+				URL = fileURL + "/" + fileDate + "/" + fileName;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

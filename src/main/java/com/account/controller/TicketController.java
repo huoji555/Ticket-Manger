@@ -64,6 +64,9 @@ public class TicketController {
     @Autowired
     private ProductService productService;
 
+    @Value("${upload.excel.path}")
+    private String excelPath;
+
 
 
     /**
@@ -93,7 +96,13 @@ public class TicketController {
         //文件上传
         byte[] newsPageByte = file.getBytes();
         String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1,file.getOriginalFilename().length()).toLowerCase();
-        String fileURL = "C:\\upload\\temp";
+        String fileURL = excelPath;
+
+        System.out.println("-------------------------");
+        System.out.println(fileURL);
+        System.out.println(excelPath);
+        System.out.println(fileURL == excelPath);
+        System.out.println("-------------------------");
 
         BeSaveFileUitl be = new BeSaveFileUitl();
         be.setFileExtension(fileExtension);
