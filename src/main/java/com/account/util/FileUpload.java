@@ -85,7 +85,7 @@ public class FileUpload {
 		String URL = "";
 		try {
 			// 创建流对象
-			fos = new FileOutputStream(fileURL + "/" + fileDate + "/"
+			fos = new FileOutputStream(fileURL.trim() + "/" + fileDate + "/"
 					+ fileName + "." + fileExtension);
 			System.out.println(fos);
 			// 转换为byte数组
