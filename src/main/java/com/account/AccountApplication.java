@@ -29,7 +29,7 @@ public class AccountApplication extends SpringBootServletInitializer {
         if (System.getenv("SPWD") == null){
             SpringApplication.run(AccountApplication.class, args);  //加载线上数据库
         } else {
-            application.run(args);
+            application.run(args);                                  //加载本地测试服务
         }
 
     }
