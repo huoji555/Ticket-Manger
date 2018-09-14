@@ -101,7 +101,7 @@ public class TicketController {
         BeSaveFileUitl be = new BeSaveFileUitl();
         be.setFileExtension(fileExtension);
         be.setFilesByte(newsPageByte);
-        be.setFileURL(fileURL);
+        be.setFileURL(fileURL.trim());
 
         //文件格式检查
         if (! ((fileExtension.equals("xls")) || (fileExtension.equals("xlsx")))  ) {

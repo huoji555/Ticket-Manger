@@ -112,7 +112,7 @@ public class AuditingController {
         BeSaveFileUitl be = new BeSaveFileUitl();
         be.setFileExtension(fileExtension);
         be.setFilesByte(newsPageByte);
-        be.setFileURL(fileURL);
+        be.setFileURL(fileURL.trim());
 
         String Url2 = "";
         String Url3 = "";
