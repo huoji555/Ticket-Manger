@@ -10,6 +10,8 @@ import com.account.util.ResultBean;
 import com.account.vo.BeSaveFileUitl;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,7 @@ public class AuditingController {
     @Value("${upload.file.spiltPath}")
     private String spiltPath;
 
+    private final Logger logger = LoggerFactory.getLogger(AuditingController.class);
 
 
     /**
@@ -107,6 +110,7 @@ public class AuditingController {
             fileURL = filePath +adminId+"/Authorization";
         }
 
+        logger.info("上传前的路径"+fileURL.trim());
 
         // 存相对路径
         BeSaveFileUitl be = new BeSaveFileUitl();
@@ -128,6 +132,7 @@ public class AuditingController {
             Url2 = url.split(spiltPath)[1];   // 文件在服务器中的真实路径，用来删除
         }
 
+        logger.info("上传后的路径"+Url2);
         System.out.println(Url2);
         System.out.println(Url3);
 
