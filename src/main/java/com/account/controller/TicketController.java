@@ -284,13 +284,16 @@ public class TicketController {
      */
     @GetMapping("calculate")
     public ResultBean<Map<String,Object>> calculate (@RequestParam String currentDate,
-                                                     @RequestParam String ticketNumber)throws Exception{
+                                                     @RequestParam String ticketNumber,
+                                                     HttpServletRequest request)throws Exception{
         Map<String,Object> result = Maps.newHashMap();
+        HttpSession session = request.getSession();
+        String adminId = String.valueOf(session.getAttribute("admin"));
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date curentTime = sdf.parse(currentDate);
 
-        Ticket ticket = ticketService.queryTicketByNumber(ticketNumber);
+        Ticket ticket = ticketService.queryTicketByTicketNumberAndUploader(ticketNumber,adminId);
 
         long nd = 1000 * 24 * 60 * 60;
         long diff = ticket.getMaturityTime().getTime() - curentTime.getTime();

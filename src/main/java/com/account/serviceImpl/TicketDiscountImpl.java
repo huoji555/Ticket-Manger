@@ -19,7 +19,7 @@ public class TicketDiscountImpl implements TicketDiscountService {
     }
 
     @Override
-    public TicketDiscount queryTicketDiscountByTicketNumber(String ticketNumber) {
-        return ticketDiscountRepository.queryTicketDicount(ticketNumber);
+    public TicketDiscount queryTicketDiscountByTicketNumber(String ticketNumber,String uploader) {
+        return ticketDiscountRepository.queryTicketDicount(ticketNumber,uploader);
     }
 }

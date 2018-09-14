@@ -55,11 +55,15 @@ public class TicketDiscountController {
      * @return
      */
     @GetMapping("/getContent")
-    public ResultBean<TicketDiscount> getContent(@RequestParam String ticketNumber){
+    public ResultBean<TicketDiscount> getContent(@RequestParam String ticketNumber,
+                                                 HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        String adminId = String.valueOf(session.getAttribute("admin"));
 
         TicketDiscount ticketDiscount = new TicketDiscount();
 
-        ticketDiscount = ticketDiscountService.queryTicketDiscountByTicketNumber(ticketNumber);
+        ticketDiscount = ticketDiscountService.queryTicketDiscountByTicketNumber(ticketNumber,adminId);
 
         return new ResultBean<TicketDiscount>(ticketDiscount);
     }
@@ -74,9 +78,13 @@ public class TicketDiscountController {
      * @return
      */
     @PostMapping("/save")
-    public ResultBean<Map<String,Object>> save(@RequestBody TicketDiscount ticketDiscount){
+    public ResultBean<Map<String,Object>> save(@RequestBody TicketDiscount ticketDiscount,
+                                               HttpServletRequest request){
 
         Map<String,Object> result = Maps.newHashMap();
+
+        HttpSession session = request.getSession();
+        String adminId = String.valueOf(session.getAttribute("admin"));
 
         Date date = new Date();
         TicketDiscount ticketDiscount1 = new TicketDiscount();
@@ -87,10 +95,11 @@ public class TicketDiscountController {
         ticketDiscount1.setDiscountPreice(ticketDiscount.getDiscountPreice());
         ticketDiscount1.setTicketNumber(ticketDiscount.getTicketNumber());
         ticketDiscount1.setCreateDate(date);
+        ticketDiscount1.setDiscountUploader(adminId);
 
         ticketDiscountService.save(ticketDiscount1);
 
-        Ticket ticket = ticketService.queryTicketByNumber(ticketDiscount.getTicketNumber());
+        Ticket ticket = ticketService.queryTicketByTicketNumberAndUploader(ticketDiscount.getTicketNumber(),adminId);
 
         ticket.setDiscountStatus("1");
         ticketService.save(ticket);

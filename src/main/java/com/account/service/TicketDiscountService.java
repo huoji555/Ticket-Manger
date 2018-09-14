@@ -6,6 +6,6 @@ public interface TicketDiscountService {
 
     void save(TicketDiscount ticketDiscount);
 
-    TicketDiscount queryTicketDiscountByTicketNumber(String ticketNumber);
+    TicketDiscount queryTicketDiscountByTicketNumber(String ticketNumber,String uploader);
 
 }

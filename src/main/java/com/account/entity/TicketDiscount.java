@@ -22,6 +22,7 @@ public class TicketDiscount implements Serializable {
     private String  commission;                 //手续费
     private Date    createDate;                 //创建日期
     private String  ticketNumber;               //票号
+    private String  discountUploader;           //贴现者
 
 
     @Id
@@ -55,5 +56,8 @@ public class TicketDiscount implements Serializable {
     public Date getCreateDate() { return createDate; }
     public void setCreateDate(Date createDate) { this.createDate = createDate; }
 
+    @Column(name = "discountUploader")
+    public String getDiscountUploader() { return discountUploader; }
+    public void setDiscountUploader(String discountUploader) { this.discountUploader = discountUploader; }
 
 }

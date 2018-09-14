@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Auther: Ragty
@@ -42,6 +43,7 @@ public class Auditing implements Serializable {
     private String autType;
     private String status;                    //总的审核状态
     private String phone;                     //法人电话
+    private Date   successDate;               //审核成功的日期
 
 
 
@@ -139,6 +141,10 @@ public class Auditing implements Serializable {
     @Column(name = "autType")
     public String getAutType() { return autType; }
     public void setAutType(String autType) { this.autType = autType; }
+
+    @Column(name = "successDate")
+    public Date getSuccessDate() { return successDate; }
+    public void setSuccessDate(Date successDate) { this.successDate = successDate; }
 
 
 }
