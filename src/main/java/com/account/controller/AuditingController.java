@@ -14,6 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -300,7 +303,36 @@ public class AuditingController {
     }
 
 
-    //@GetMapping("getAuditing")
+    /**
+     * @author Ragty
+     * @param 获取管理员审核信息
+     * @serialData 2018.9.15
+     * @param page
+     * @param size
+     * @param phone
+     * @param status
+     * @return
+     */
+    @GetMapping("getAuditing")
+    public ResultBean<Page<Object[]>> queryAuditingMessage(@RequestParam Integer page,@RequestParam Integer size,
+                                                           @RequestParam String phone,@RequestParam String status) {
+
+        Pageable pageable = new PageRequest(page,size);
+
+        if (null!=phone && !"".equals(phone)&& !"undefined".equals(phone)) {
+            phone = '';
+        }
+
+        if (null!=status && !"".equals(status)&& !"undefined".equals(status)) {
+            status = '';
+        }
+
+        System.out.println(status+"&&&&&&&&&&&&"+phone);
+
+        Page<Object[]> list = auditingService.queryAuditingMessage(phone,status,pageable);
+        return new ResultBean<Page<Object[]>>(list);
+
+    }
 
 
 

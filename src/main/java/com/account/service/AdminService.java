@@ -1,6 +1,7 @@
 package com.account.service;
 
 import com.account.entity.Admin;
+import org.springframework.data.domain.Page;
 
 
 public interface AdminService {

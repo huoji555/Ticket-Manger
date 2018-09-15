@@ -1,11 +1,12 @@
 package com.account.repository;
 
 import com.account.entity.Admin;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(path = "admin")
-public interface AdminRepository extends PagingAndSortingRepository<Admin,String> {
+public interface AdminRepository extends PagingAndSortingRepository<Admin,String> , JpaSpecificationExecutor<Admin> {
 
    Admin queryAdminByPhoneNumber(String phoneNumber);
 

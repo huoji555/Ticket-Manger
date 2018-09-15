@@ -1,6 +1,8 @@
 package com.account.service;
 
 import com.account.entity.Auditing;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AuditingService {
 
@@ -9,5 +11,7 @@ public interface AuditingService {
     Auditing queryAuditingByPhone(String phone);
 
     void saveAndFlush(Auditing auditing);
+
+    Page<Object[]> queryAuditingMessage(String phone, String status, Pageable pageable);
 
 }

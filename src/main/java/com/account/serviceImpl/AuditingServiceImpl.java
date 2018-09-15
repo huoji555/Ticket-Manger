@@ -4,7 +4,17 @@ import com.account.entity.Auditing;
 import com.account.repository.AuditingRepository;
 import com.account.service.AuditingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AuditingServiceImpl implements AuditingService {
@@ -28,5 +38,11 @@ public class AuditingServiceImpl implements AuditingService {
     @Override
     public void saveAndFlush(Auditing auditing) {
         auditingRepository.saveAndFlush(auditing);
+    }
+
+    //查询审核信息分页
+    @Override
+    public Page<Object[]> queryAuditingMessage(String phone, String status, Pageable pageable) {
+        return auditingRepository.queryAuditingMessage(phone,status,pageable);
     }
 }
