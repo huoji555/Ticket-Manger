@@ -1,0 +1,65 @@
+
+<!-- 审核表格 -->
+<table class="table table-responsive-xl table-striped table-bordered table-hover">
+    <thead><tr><th>用户手机号</th><th>企业名称</th><th>注册日期</th><th>用户IP</th><th>审核状态</th><th >查看</th></tr></thead>
+    <tbody>
+
+      <tr ng-repeat="list in  lists">
+          <td>{{list[0]}}</td>
+          <td>{{list[1]}}</td>
+          <td>{{list[2] | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+          <td>{{list[3]}}</td>
+          <td ng-if="list[4] == '1'"><span class="badge badge-success">审核通过</span></td>
+          <td ng-if="!(list[4] == '1')"><span class="badge badge-danger">未通过</span></td>
+          <td ng-if="list[4] == '1'"><a data-target="#auditingBack" data-toggle="modal" ng-click="getAuditingMessage(list[0])" class="badge badge-info" >查看</a></td>
+          <td ng-if="!(list[4] == '1')"><a data-target="#auditingBack" data-toggle="modal" ng-click="getAuditingMessage(list[0])" class="badge badge-secondary">审核</a></td>
+      </tr>
+
+    </tbody>
+</table>
+
+
+<!-- 默认分页 -->
+<ul class="pagination justify-content-center" ng-if="!checkQuery">
+    <li class="page-item">
+        <a class="page-link" ng-click="page(currPage,'first')" disabled="disabled" >
+            <span aria-hidden="true">首页</span>
+        </a>
+    </li>
+    <li class="page-item"><a class="page-link" ng-click="page(currPage,'up')">上一页</a></li>
+    <li class="page-item"><a class="page-link" ng-click="page(currPage,'next')">下一页</a></li>
+    <li class="page-item">
+        <a class="page-link" ng-click="page(pages,'last');" aria-label="Next">
+            <span aria-hidden="true">末页</span>
+        </a>
+    </li>
+    <li style="margin-top: 0.6%; margin-left: 5%;">
+        <span>第{{currPage+1}}页</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>共{{pages}}页</span>
+    </li>
+</ul>
+
+
+
+
+
+<!-- 审核信息模态框 -->
+<div class="modal fade" id="auditingBack" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-warning modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">企业审核</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <img src="{{singleAuditing.authorization}}" class="img-rounded" style="width: 100% \9;" alt="Responsive image">{{singleAuditing.authorization}}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -305,7 +305,7 @@ public class AuditingController {
 
     /**
      * @author Ragty
-     * @param 获取管理员审核信息
+     * @param 获取管理员审核信息(支持查询)
      * @serialData 2018.9.15
      * @param page
      * @param size
@@ -313,24 +313,42 @@ public class AuditingController {
      * @param status
      * @return
      */
-    @GetMapping("getAuditing")
+    @GetMapping("queryAuditing")
     public ResultBean<Page<Object[]>> queryAuditingMessage(@RequestParam Integer page,@RequestParam Integer size,
                                                            @RequestParam String phone,@RequestParam String status) {
 
         Pageable pageable = new PageRequest(page,size);
 
-        if (null!=phone && !"".equals(phone)&& !"undefined".equals(phone)) {
-            phone = '';
+        System.out.println(status+"&&&&&&&&&&&&"+phone);
+
+        if (null == phone &&  "".equals(phone)&& "undefined".equals(phone)) {
+            phone = "";
         }
 
-        if (null!=status && !"".equals(status)&& !"undefined".equals(status)) {
-            status = '';
+        if (null==status && "".equals(status)&& "undefined".equals(status)) {
+            status = "";
         }
 
         System.out.println(status+"&&&&&&&&&&&&"+phone);
 
         Page<Object[]> list = auditingService.queryAuditingMessage(phone,status,pageable);
         return new ResultBean<Page<Object[]>>(list);
+
+    }
+
+
+    /**
+     * @author Ragty
+     * @param  根据用户手机号获取审核信息
+     * @serialData  2018.9.17
+     * @param phone
+     * @return
+     */
+    @GetMapping("getAuditingByPhone")
+    public ResultBean<Auditing> getAuditingByPhone(@RequestParam String phone) {
+
+        Auditing auditing = auditingService.queryAuditingByPhone(phone);
+        return  new ResultBean<>(auditing);
 
     }
 

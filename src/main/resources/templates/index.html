@@ -80,8 +80,12 @@
                 <i class="nav-icon icon-star"></i> 票据当日价格</a>
             </li>
 
-            <!--<li class="divider"></li>
-            <li class="nav-title">财务分析</li>-->
+            <li class="divider"  ng-show="roleId=='1'"></li>
+            <li class="nav-title" ng-show="roleId=='1'">后台管理</li>
+            <li class="nav-item" ng-show="roleId=='1'">
+              <a class="nav-link" href="index.html#!/auditingBack" ng-click="changeName('企业审核')">
+                <i class="nav-icon icon-pie-chart"></i> 企业审核</a>
+            </li>
 
 
           </ul>

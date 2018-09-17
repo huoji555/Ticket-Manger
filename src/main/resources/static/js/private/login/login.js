@@ -27,7 +27,7 @@ function LoginController($scope,$http,$window,$rootScope) {
                     if (response.data.roleId == "2"){
                         $scope.feedback();
                     } else if (response.data.roleId == "1") {
-                        alert("管理员");
+                        $window.location = "index.html";
                     }
                 } else if (status == 201){
                     alert(msg);

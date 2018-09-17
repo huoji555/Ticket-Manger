@@ -20,13 +20,13 @@ public interface AuditingRepository extends JpaRepository<Auditing,String> {
                     "LEFT JOIN auditing aud on adm.phone_number=aud.phone " +
                     "where 1=1 "+
                     "and (case when :phone !='' then aud.phone=:phone else 1=1 end)"+
-                    "and (case when :status != '' then aud.status=:status else aud.status='' end)"+
+                    "and (case when :status != '' then aud.status=:status else 1=1 end)"+
                     "order by ?#{#pageable}",
             countQuery = "select count(*)" +
                     "FROM member adm LEFT JOIN auditing aud on adm.phone_number=aud.phone "+
                     "where 1=1 " +
                     "and (case when :phone !='' then aud.phone=:phone else 1=1 end)"+
-                    "and (case when :status != '' then aud.status=:status else aud.status='' end)",
+                    "and (case when :status != '' then aud.status=:status else 1=1 end)",
             nativeQuery = true)
     Page<Object[]> queryAuditingMessage(@Param("phone") String phone, @Param("status") String status, Pageable pageable);
 

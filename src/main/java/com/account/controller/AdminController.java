@@ -219,14 +219,17 @@ public class AdminController {
         HttpSession session = request.getSession();
 
         String adminId = String.valueOf(session.getAttribute("admin"));
+        String roleId = String.valueOf(adminService.queryAdminByPhone(adminId).getRoleId());
 
         if (adminId.equals("null") || adminId == "null"){
             result.put("status",201);
+            result.put("roleId","");
             result.put("message","未登录，非法操作");
             return result;
         }
 
         result.put("status",200);
+        result.put("roleId",roleId);
         result.put("message","已登录");
         return result;
     }

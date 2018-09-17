@@ -6,6 +6,7 @@ indexApp.config(['$routeProvider',function ($routeProvider) {
                   .when('/ticketDiscount',{templateUrl:"html/Ticket/ticketDiscountContent.html",controller:ticketDiscountController})
                   .when('/adminMessage',{templateUrl:"html/Admin/adminMessage.html",controller:adminMessageController})
                   .when('/tradeMessage',{templateUrl:"html/Trade/TradeMessage.html",controller:tradeMessageController})
+                  .when('/auditingBack',{templateUrl:"html/Auditing/auditingBackContent.html",controller:auditingBackController})
 }]);
 
 
@@ -38,11 +39,13 @@ indexApp.controller('indexCon',function ($scope,$http,$window,$rootScope) {
             .then(function (response) {
                 var status = response.data.status;
                 var msg = response.data.message;
+                var roleId = response.data.roleId;
 
                 if (status == 201){
                     alert("您还未登录，请登录后再操作");
                     $window.location = "login.html";
                 }
+                $scope.roleId = roleId;
             })
     }
 
@@ -489,6 +492,73 @@ function tradeMessageController($scope,$http,$window,$rootScope,$filter) {
     }
 
     $scope.queryDate(currentDate);
+
+}
+
+
+
+
+
+
+/*-------------------------后台审核信息--------------------------*/
+function auditingBackController($scope,$http,$window,$rootScope) {
+
+    var pageSize = 2;
+    var queryPhone = '';
+    var queryStatus = '';
+
+    //审核信息分页
+    $scope.pagination = function(initPage,pageSize){
+
+        $http.get('/auditing/queryAuditing?page='+initPage+'&size='+pageSize+'&phone='+queryPhone+'&status='+queryStatus)
+            .then(function (response) {
+                $scope.totalNum = response.data.data.totalElements;//数据总数
+                $scope.pages = response.data.data.totalPages;//页数
+                $scope.currPage = response.data.data.number;//当前页
+                $scope.isFirstPage = response.data.data.first;//是否是首页
+                $scope.isLastPage = response.data.data.last;//是否是尾页
+                $scope.lastUpPage = $scope.pages - 1;//倒数第二页
+                $scope.lists = response.data.data.content;
+            })
+
+    }
+
+    $scope.pagination(0,pageSize);
+
+    //分页下部
+    $scope.page = function (page,oper) {
+
+        if(oper == 'first'){ //首页
+            $scope.pagination(0,pageSize)
+        }
+        if(oper == 'up'){   //上一页
+            if (page == 0){
+                return;
+            }
+            $scope.pagination(page-1,pageSize);
+        }
+        if(oper == 'next'){ //下一页
+            if (page == $scope.pages-1){
+                return;
+            }
+            $scope.pagination(page+1,pageSize);
+        }
+        if (oper == 'last'){  //末页
+            $scope.pagination(page-1,pageSize);
+        }
+    }
+
+    //获取审核信息
+    $scope.getAuditingMessage = function(phone){
+        
+        $http.get('/auditing/getAuditingByPhone?phone='+phone)
+            .then(function (response) {
+                $scope.singleAuditing = response.data.data;
+            })
+        
+    }
+    
+    
 
 }
 
