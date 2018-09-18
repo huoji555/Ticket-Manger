@@ -3,6 +3,7 @@ package com.account.util;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Component
 public class CalculateTool {
@@ -62,6 +63,39 @@ public class CalculateTool {
 
         return prductIncome.toString();
     }
+
+
+    /**
+     * @author Ragty
+     * @param  套利空间计算
+     * @serialData  2018.9.18
+     * @param amount
+     * @param minIncome
+     * @param maxIncome
+     * @param list
+     * @return
+     */
+    public String arbitrage(String amount, String minDiscount, String maxDiscount, List<String> list) {
+
+        list.sort(String::compareTo);
+
+        BigDecimal maxProduct = new BigDecimal(list.get(list.size()-1));
+        BigDecimal amt = new BigDecimal(amount);
+        BigDecimal min = new BigDecimal(minDiscount);
+        BigDecimal max = new BigDecimal(maxDiscount);
+        BigDecimal two = new BigDecimal("2");
+
+        //均值计算
+        BigDecimal finacingCost = amt.multiply(two).subtract(min).subtract(max);
+        BigDecimal avgValue = finacingCost.divide(two,4,BigDecimal.ROUND_HALF_UP);
+
+        //套利金额
+        BigDecimal arbValue = maxProduct.subtract(avgValue);
+
+        return arbValue.toString();
+    }
+
+
 
 
 

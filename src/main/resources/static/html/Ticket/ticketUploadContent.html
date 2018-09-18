@@ -147,7 +147,7 @@
             </div>
             <div class="modal-body">
                 <table class='table table-responsive-xl table-striped table-bordered table-hover' align="middle">
-                    <thead><tr class="success"><th>序号</th><th>交易类型</th><th colspan="2">融资预估</th><th>理财A类(45天)</th><th>理财B类(90天)</th><th>理财C类(180天)</th></tr></thead>
+                    <thead><tr class="success"><th>序号</th><th>交易类型</th><th colspan="2">融资预估</th><th>理财A类(45天)</th><th>理财B类(90天)</th><th>理财C类(180天)</th><th>套利空间</th></tr></thead>
                     <tbody ng-repeat="list in rateList">
 
                     <tr>
@@ -157,6 +157,7 @@
                         <td>{{list.min2323A == 0 ? '不匹配' : (list.min2323A | number:2)}}</td>
                         <td>{{list.min2323B == 0 ? '不匹配' : (list.min2323B | number:2)}}</td>
                         <td>{{list.min2323C == 0 ? '不匹配' : (list.min2323C | number:2)}}</td>
+                        <td rowspan="2">{{list.arbitrage < 0 ? '不推荐' : (list.arbitrage | number:2)}}</td>
                     </tr>
                     <tr>
                         <td>最大值</td><td>{{list.maxRate | number:2}}</td>

@@ -339,7 +339,7 @@ public class TicketController {
 
             //产品收益(下面的list用来计算套利空间)
             List<Product> productList = productService.getAll();
-            /*List<String> list = new ArrayList<String>();*/
+            List<String> newList = new ArrayList<String>();
             for (int j=0; j<productList.size(); j++) {
                 Long productDays = productList.get(j).getDays().longValue();
                 Float yield = productList.get(j).getYield();
@@ -350,16 +350,20 @@ public class TicketController {
 
                 map.put("min"+productId.toString(),minIncome);
                 map.put("max"+productId.toString(),maxIncome);
-                /*list.add(minIncome);
-                list.add(maxIncome);*/
+                newList.add(minIncome);
+                newList.add(maxIncome);
             }
 
+            //计算套利空间
+            String arbitrage = calculateTool.arbitrage(ticketAmount.toString(),min,max,newList);
+
+            map.put("arbitrage",arbitrage);
             map.put("minRate",min+"");
             map.put("maxRate",max+"");
             tradeList.add(map);
         }
 
-        for(int x = 0; x<tradeList.size(); x++){
+        /*for(int x = 0; x<tradeList.size(); x++){
 
             Map<String,String> map1 = tradeList.get(x);
 
@@ -367,7 +371,7 @@ public class TicketController {
                 System.out.println(key + " "+value);
             });
 
-        }
+        }*/
 
         result.put("status",200);
         result.put("message","计算成功");
