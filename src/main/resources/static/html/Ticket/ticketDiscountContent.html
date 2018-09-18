@@ -1,5 +1,5 @@
 <table class='table table-responsive-xl table-striped table-bordered table-hover'>
-    <thead><tr><th>票据号码</th><th>票面金额</th><th>票据类型</th><th>票据名称</th><th>不可转让标识</th><th>出票日期</th><th>到期日期</th><th>出票人名称</th><th>承兑人名称</th><th>票据状态</th><th>贴现状态</th><th>操作</th><th>交易</th></tr></thead>
+    <thead><tr><th>票据号码</th><th>票面金额</th><th>票据类型</th><th>票据名称</th><th>不可转让标识</th><th>出票日期</th><th>到期日期</th><th>出票人名称</th><th>承兑人名称</th><th>票据状态</th><th>贴现状态</th><th>操作</th><th>贴现信息</th></tr></thead>
     <tbody>
 
     <tr ng-repeat="list in lists">
@@ -66,8 +66,8 @@
                     <tr><td>收票人名称</td><td>{{invoiceName}}</td><td>承兑人名称</td><td>{{acceptorName}}</td><td>贴现价格</td><td>{{discount.discountPreice}}</td></tr>
                     <tr><td>下手持票人名称</td><td>{{handheldName}}</td><td>下手持票人账号</td><td>{{handheldAccountNumber}}</td><td>贴现金额</td><td>{{discount.discountAmount}}</td></tr>
                     <tr><td>本手持票人名称</td><td>{{originalHandheldName}}</td><td>本手持票人行号</td><td>{{originalHandheldBankNumber}}</td><td>手续费</td><td>{{discount.commission}}</td></tr>
-                    <tr><td>出票人名称</td><td>{{billerName}}</td><td>下手持票人行号</td><td>{{handheldBankNumber}}</td><td>贴现日期</td><td>{{discount.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td></tr>
-                    <tr><td>票据状态</td><td>{{ticketStatus}}</td><td>在池状态</td><td>{{poolStatus}}</td><td></td><td></td></tr>
+                    <tr><td>出票人名称</td><td>{{billerName}}</td><td>下手持票人行号</td><td>{{handheldBankNumber}}</td><td>贴现类型</td><td>{{discountType}}</td></tr>
+                    <tr><td>票据状态</td><td>{{ticketStatus}}</td><td>在池状态</td><td>{{poolStatus}}</td><td>贴现日期</td><td>{{discount.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td></tr>
                 </table>
 
             </div>
@@ -108,11 +108,20 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <label>手续费</label>
                         <input type="text" class="form-control" ng-model="discount.commission" placeholder="手续费" />
                     </div>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
+                        <label>贴现类型</label>
+                        <select id="discountType" class="form-control"  required>
+                            <option selected value="0">请选择</option>
+                            <option value="1">贴现买断</option>
+                            <option value="2">贴现复查</option>
+                            <option value="3">质押</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4">
                         <label>贴现日期</label>
                         <input type="text" class="form-control" placeholder="贴现日期" value="{{discount.createDate | date:'yyyy-MM-dd HH:mm:ss'}}" disabled/>
                     </div>

@@ -39,7 +39,7 @@
 
 
 <table class="table table-responsive-xl table-striped table-bordered table-hover">
-    <thead><tr><th>票据号码</th><th>票面金额</th><th>票据类型</th><th>票据名称</th><th>不可转让标识</th><th>出票日期</th><th>到期日期</th><th>出票人名称</th><th>承兑人名称</th><th>票据状态</th><th>操作</th><th>交易</th></tr></thead>
+    <thead><tr><th>票据号码</th><th>票面金额</th><th>票据类型</th><th>票据名称</th><th>不可转让标识</th><th>出票日期</th><th>到期日期</th><th>出票人名称</th><th>承兑人名称</th><th>票据状态</th><th>操作</th><th>估算</th></tr></thead>
     <tbody>
 
     <tr ng-repeat="list in lists">
@@ -54,7 +54,7 @@
         <td>{{list.acceptorName}}</td>
         <td>{{list.ticketStatus}}</td>
         <td><a data-target="#kpokpo" data-toggle="modal" ng-click="show(list)" class="badge badge-success">查看</a></td>
-        <td><a data-target="#tradeMessage" data-toggle="modal" ng-click="calculate(list)" class="badge badge-warning">交易</a></td>
+        <td><a data-target="#tradeMessage" data-toggle="modal" ng-click="calculate(list)" class="badge badge-warning">估算</a></td>
     </tr>
 
     </tbody>
@@ -153,10 +153,16 @@
                     <tr>
                     <td rowspan="2">{{$index+1}}</td>
                     <td rowspan="2">{{list.tradeType}}</td>
-                        <td>最小值</td><td>{{list.minRate | number:2}}</td><td>{{list.min2323A | number:2}}</td><td>{{list.min2323B | number:2}}</td><td>{{list.min2323C | number:2}}</td>
+                        <td>最小值</td><td>{{list.minRate | number:2}}</td>
+                        <td>{{list.min2323A == 0 ? '不匹配' : (list.min2323A | number:2)}}</td>
+                        <td>{{list.min2323B == 0 ? '不匹配' : (list.min2323B | number:2)}}</td>
+                        <td>{{list.min2323C == 0 ? '不匹配' : (list.min2323C | number:2)}}</td>
                     </tr>
                     <tr>
-                        <td>最大值</td><td>{{list.maxRate | number:2}}</td><td>{{list.max2323A | number:2}}</td><td>{{list.max2323B | number:2}}</td><td>{{list.max2323C | number:2}}</td>
+                        <td>最大值</td><td>{{list.maxRate | number:2}}</td>
+                        <td>{{list.max2323A == 0 ? '不匹配' : (list.max2323A | number:2)}}</td>
+                        <td>{{list.max2323B == 0 ? '不匹配' : (list.max2323B | number:2)}}</td>
+                        <td>{{list.max2323C == 0 ? '不匹配' : (list.max2323C | number:2)}}</td>
                     </tr>
 
 

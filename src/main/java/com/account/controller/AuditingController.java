@@ -319,8 +319,6 @@ public class AuditingController {
 
         Pageable pageable = new PageRequest(page,size);
 
-        System.out.println(status+"&&&&&&&&&&&&"+phone);
-
         if (null == phone &&  "".equals(phone)&& "undefined".equals(phone)) {
             phone = "";
         }

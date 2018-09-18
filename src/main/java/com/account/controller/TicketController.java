@@ -311,7 +311,6 @@ public class TicketController {
         list.add("质押");
         list.add("基准");
 
-        //List<BeTrade> tradeList = new ArrayList<BeTrade>();
         List<Map<String,String>> tradeList = new ArrayList();
 
         for (int i=0; i<list.size(); i++){
@@ -338,8 +337,9 @@ public class TicketController {
             String min = calculateTool.calculateDiscount(day,minDiscountRate,ticketAmount);
             String max = calculateTool.calculateDiscount(day,maxDiscountRate,ticketAmount);
 
-            //产品收益
+            //产品收益(下面的list用来计算套利空间)
             List<Product> productList = productService.getAll();
+            /*List<String> list = new ArrayList<String>();*/
             for (int j=0; j<productList.size(); j++) {
                 Long productDays = productList.get(j).getDays().longValue();
                 Float yield = productList.get(j).getYield();
@@ -350,6 +350,8 @@ public class TicketController {
 
                 map.put("min"+productId.toString(),minIncome);
                 map.put("max"+productId.toString(),maxIncome);
+                /*list.add(minIncome);
+                list.add(maxIncome);*/
             }
 
             map.put("minRate",min+"");

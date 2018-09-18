@@ -36,11 +36,12 @@
       <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img class="img-avatar" src="img/avatars/6.jpg">
+            <img class="img-avatar" src="">
+            <canvas id="headImg" style="display:none"></canvas>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header text-center">
-              <strong>Settings</strong>
+              <strong>设置</strong>
             </div>
             <a class="dropdown-item"  class="fa fa-key" data-target="#updatePWD" data-toggle="modal">
               <i></i> 修改密码</a>
@@ -72,12 +73,12 @@
                 <i class="nav-icon icon-pie-chart"></i> 票据导入</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html#!/ticketDiscount" ng-click="changeName('票据贴现')">
-                <i class="nav-icon icon-calculator"></i> 票据贴现</a>
+              <a class="nav-link" href="index.html#!/ticketDiscount" ng-click="changeName('已贴现票据')">
+                <i class="nav-icon icon-calculator"></i> 已贴现票据</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html#!/tradeMessage" ng-click="changeName('票据当日价格')">
-                <i class="nav-icon icon-star"></i> 票据当日价格</a>
+              <a class="nav-link" href="index.html#!/tradeMessage" ng-click="changeName('当日市场票价')">
+                <i class="nav-icon icon-star"></i> 当日市场票价</a>
             </li>
 
             <li class="divider"  ng-show="roleId=='1'"></li>

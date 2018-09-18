@@ -96,6 +96,7 @@ public class TicketDiscountController {
         ticketDiscount1.setTicketNumber(ticketDiscount.getTicketNumber());
         ticketDiscount1.setCreateDate(date);
         ticketDiscount1.setDiscountUploader(adminId);
+        ticketDiscount1.setDiscountType(ticketDiscount.getDiscountType());
 
         ticketDiscountService.save(ticketDiscount1);
 

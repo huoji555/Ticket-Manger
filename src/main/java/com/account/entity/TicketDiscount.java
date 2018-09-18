@@ -23,6 +23,7 @@ public class TicketDiscount implements Serializable {
     private Date    createDate;                 //创建日期
     private String  ticketNumber;               //票号
     private String  discountUploader;           //贴现者
+    private String  discountType;               //贴现类型
 
 
     @Id
@@ -59,5 +60,9 @@ public class TicketDiscount implements Serializable {
     @Column(name = "discountUploader")
     public String getDiscountUploader() { return discountUploader; }
     public void setDiscountUploader(String discountUploader) { this.discountUploader = discountUploader; }
+
+    @Column(name = "discountType")
+    public String getDiscountType() { return discountType; }
+    public void setDiscountType(String discountType) { this.discountType = discountType; }
 
 }

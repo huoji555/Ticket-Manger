@@ -40,12 +40,14 @@ indexApp.controller('indexCon',function ($scope,$http,$window,$rootScope) {
                 var status = response.data.status;
                 var msg = response.data.message;
                 var roleId = response.data.roleId;
+                var company = response.data.company;
 
                 if (status == 201){
                     alert("您还未登录，请登录后再操作");
                     $window.location = "login.html";
                 }
                 $scope.roleId = roleId;
+                textToImg(company);
             })
     }
 
@@ -106,6 +108,31 @@ indexApp.controller('indexCon',function ($scope,$http,$window,$rootScope) {
         return false;
     }
 
+
+    //生成头像图片
+    function textToImg(text){
+        var ucompany = text;
+        if (ucompany == null) {
+            alert("鸡掰");
+        }
+        var company = ucompany.charAt(0);
+        var fontSize = 60;
+        var fontWeight = 'bold';
+
+        var canvas = document.getElementById('headImg');
+        var img1 = document.getElementById('headImg');
+        canvas.width = 120;
+        canvas.height = 120;
+        var context = canvas.getContext('2d');
+        context.fillStyle = '#F7F7F9';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = '#605CA8';
+        context.font = fontWeight + ' ' + fontSize + 'px sans-serif';
+        context.textAlign = 'center';
+        context.textBaseline="middle";
+        context.fillText(company, fontSize, fontSize);
+        $('.img-avatar').attr('src',canvas.toDataURL("image/png"));
+    };
 
 });
 
@@ -396,6 +423,27 @@ function ticketDiscountController($scope,$http,$window,$rootScope) {
         $http.get('/ticketDiscount/getContent?ticketNumber='+ticketNumber)
             .then(function (response) {
                 $scope.discount = response.data.data;
+                var discountType = null;
+                try {
+                    discountType  = response.data.data.discountType;
+                } catch (e) {
+                }
+
+                if (discountType != null){
+                    $("#discountType").val(discountType);
+                } else {
+                    $("#discountType").val(0);
+                }
+
+
+
+                if (discountType == "1") {
+                    $scope.discountType = "贴现买断";
+                } else if (discountType == "2") {
+                    $scope.discountType = "贴现复查";
+                } else if (discountType == "3") {
+                    $scope.discountType = "质押";
+                }
             })
 
     }
@@ -405,7 +453,14 @@ function ticketDiscountController($scope,$http,$window,$rootScope) {
     /*贴现保存*/
     $scope.save = function (discount) {
 
+        var discountType = $("#discountType").val();
         discount.ticketNumber = $scope.ticketNumber;
+        discount.discountType = discountType;
+
+        if(discountType == "请选择") {
+              alert("请选择贴现类型");
+              return;
+        }
 
         $http.post('/ticketDiscount/save',discount)
             .then(function (response) {
@@ -503,7 +558,7 @@ function tradeMessageController($scope,$http,$window,$rootScope,$filter) {
 /*-------------------------后台审核信息--------------------------*/
 function auditingBackController($scope,$http,$window,$rootScope) {
 
-    var pageSize = 2;
+    var pageSize = 20;
     var queryPhone = '';
     var queryStatus = '';
 
