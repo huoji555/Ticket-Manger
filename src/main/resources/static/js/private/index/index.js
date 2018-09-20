@@ -831,6 +831,7 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
             var newtxt = $(this).val();
             td.html(newtxt);
             $scope.lists[index].minRate=newtxt;
+            console.log(123);
         })
 
     }
