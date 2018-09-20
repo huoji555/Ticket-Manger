@@ -145,6 +145,7 @@ public class AuditingController {
         if ( auditing == null ) {
             auditing = new Auditing();
             auditing.setPhone(adminId);
+            auditing.setStatus("0");
         }
 
         if ( type.equals("0") ) {
@@ -348,6 +349,47 @@ public class AuditingController {
         Auditing auditing = auditingService.queryAuditingByPhone(phone);
         return  new ResultBean<>(auditing);
 
+    }
+
+
+    /**
+     * @author Ragty
+     * @param  审核用户信息(审核后自动笔检测变更审核状态)
+     * @serialData 2018.9.20
+     * @param requestJsonBody
+     */
+    @PostMapping("auditingMember")
+    public ResultBean<Map<String,Object>> auditingMessage(@RequestBody Map<String,String> requestJsonBody) {
+        Map<String,Object> result = Maps.newHashMap();
+
+        String type = requestJsonBody.get("type");
+        String status = requestJsonBody.get("status");
+        String phone = requestJsonBody.get("phone");
+
+        Auditing auditing = auditingService.queryAuditingByPhone(phone);
+
+        if ( type.equals("0") ) {
+            auditing.setBusStatus(status);
+        } else if ( type.equals("1") ) {
+            auditing.setOrgStatus(status);
+        } else if ( type.equals("2") ) {
+            auditing.setIdcStatus(status);
+        } else if ( type.equals("3") ) {
+            auditing.setAutStatus(status);
+        } else if ( type.equals("4") ) {
+            auditing.setConStatus(status);
+        }
+
+        auditingService.save(auditing);
+
+        if ( auditing.getBusStatus().equals("1") && auditing.getConStatus().equals("1")
+                && auditing.getOrgStatus().equals("1") && auditing.getIdcStatus().equals("1")
+                && auditing.getAutStatus().equals("1") ) {
+            auditing.setStatus("1");
+            auditingService.save(auditing);
+        }
+
+        return new ResultBean<Map<String, Object>>(result);
     }
 
 

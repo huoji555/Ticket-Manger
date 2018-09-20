@@ -10,9 +10,11 @@
           <td>{{list[2] | date:'yyyy-MM-dd hh:mm:ss'}}</td>
           <td>{{list[3]}}</td>
           <td ng-if="list[4] == '1'"><span class="badge badge-success">审核通过</span></td>
-          <td ng-if="!(list[4] == '1')"><span class="badge badge-danger">未通过</span></td>
-          <td ng-if="list[4] == '1'"><a data-target="#auditingBack" data-toggle="modal" ng-click="getAuditingMessage(list[0])" class="badge badge-info" >查看</a></td>
-          <td ng-if="!(list[4] == '1')"><a data-target="#auditingBack" data-toggle="modal" ng-click="getAuditingMessage(list[0])" class="badge badge-secondary">审核</a></td>
+          <td ng-if="list[4] == '0'"><span class="badge badge-warning">审核中</span></td>
+          <td ng-if="list[4] != '0' && list[4] != '1'"><span class="badge badge-danger">未上传资料</span></td>
+          <td ng-if="list[4] == '1'"><a href="/index.html#!/auditingBack/auditing" ng-click="getAuditingPhone(list[0])" class="badge badge-info" >查看</a></td>
+          <td ng-if="list[4] == '0'"><a href="/index.html#!/auditingBack/auditing" ng-click="getAuditingPhone(list[0])" class="badge badge-secondary">审核</a></td>
+          <td ng-if="list[4] != '0' && list[4] != '1'">未上传资料</td>
       </tr>
 
     </tbody>
@@ -38,28 +40,3 @@
     </li>
 </ul>
 
-
-
-
-
-<!-- 审核信息模态框 -->
-<div class="modal fade" id="auditingBack" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-    <div class="modal-dialog modal-warning modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">企业审核</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <img src="{{singleAuditing.authorization}}" class="img-rounded" style="width:20%; height: 20%;" alt="Responsive image">{{singleAuditing.authorization}}
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
