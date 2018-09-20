@@ -1,0 +1,164 @@
+
+<!-- 审核组  -->
+<div class="row">
+
+    <div class="form-group col-sm-6">
+        <h4>企业营业执照</h4>
+        <img src="{{singleAuditing.bussinessLicense}}" style="width: 300px;height: 200px" ng-click="lookBigImg(singleAuditing.bussinessLicense)">
+    </div>
+
+    <div class="form-group col-sm-6">
+        <h5>审核</h5>
+        <select id="busType" class="form-control">
+            <option value="0">请选择</option>
+            <option value="1">通过</option>
+            <option value="2">驳回</option>
+        </select>
+        <h5 style="margin-top: 10px">信息反馈</h5>
+        <input class="form-control" placeholder="审核通过" ng-if="singleAuditing.busStatus == '1'" disabled>
+        <input class="form-control" placeholder="信息反馈" ng-if="singleAuditing.busStatus == '' || singleAuditing.busStatus == '0'" id="busMessage">
+        <input class="form-control" placeholder="信息反馈" ng-value="singleAuditing.busStatus" ng-if="singleAuditing.busStatus != '' && singleAuditing.busStatus != '0' && singleAuditing.busStatus != '1'" disabled>
+        <button type="button" class="btn btn-block btn-primary" style="margin-top: 10px;" ng-if="singleAuditing.busStatus == '' || singleAuditing.busStatus == '0' " ng-click="auditing(0)">审核</button>
+        <button type="button" class="btn btn-block btn-success" style="margin-top: 10px;" ng-if="singleAuditing.busStatus == '1'" disabled>审核通过</button>
+        <button type="button" class="btn btn-block btn-danger" style="margin-top: 10px;" ng-if="singleAuditing.busStatus != '1' && singleAuditing.busStatus != '' && singleAuditing.busStatus != '0'" disabled>已驳回</button>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="form-group col-sm-6">
+        <h4>组织机构代码证</h4>
+        <img src="{{singleAuditing.organizationCode}}" style="width: 300px;height: 200px" ng-click="lookBigImg(singleAuditing.organizationCode)">
+    </div>
+
+    <div class="form-group col-sm-6">
+        <h5>审核</h5>
+        <select id="orgType" class="form-control">
+            <option value="0">请选择</option>
+            <option value="1">通过</option>
+            <option value="2">驳回</option>
+        </select>
+        <h5 style="margin-top: 10px">信息反馈</h5>
+        <input class="form-control" placeholder="审核通过" ng-if="singleAuditing.orgStatus == '1'" disabled>
+        <input class="form-control" placeholder="信息反馈" ng-if="singleAuditing.orgStatus == '' || singleAuditing.orgStatus == '0'" id="orgMessage">
+        <input class="form-control" placeholder="信息反馈" ng-value="singleAuditing.orgStatus" ng-if="singleAuditing.orgStatus != '' && singleAuditing.orgStatus != '0' && singleAuditing.orgStatus != '1'" disabled>
+        <button type="button" class="btn btn-block btn-primary" style="margin-top: 10px;" ng-if="singleAuditing.orgStatus == '' || singleAuditing.orgStatus == '0' " ng-click="auditing(1)">审核</button>
+        <button type="button" class="btn btn-block btn-success" style="margin-top: 10px;" ng-if="singleAuditing.orgStatus == '1'" disabled>审核通过</button>
+        <button type="button" class="btn btn-block btn-danger" style="margin-top: 10px;" ng-if="singleAuditing.orgStatus != '1' && singleAuditing.orgStatus != '' && singleAuditing.orgStatus != '0'" disabled>已驳回</button>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="form-group col-sm-6">
+        <h4>法人身份证</h4>
+        <img src="{{singleAuditing.idCard}}" style="width: 300px;height: 200px" ng-click="lookBigImg(singleAuditing.idCard)">
+    </div>
+
+    <div class="form-group col-sm-6">
+        <h5>审核</h5>
+        <select id="idcType" class="form-control">
+            <option value="0">请选择</option>
+            <option value="1">通过</option>
+            <option value="2">驳回</option>
+        </select>
+        <h5 style="margin-top: 10px">信息反馈</h5>
+        <input class="form-control" placeholder="审核通过" ng-if="singleAuditing.idcStatus == '1'" disabled>
+        <input class="form-control" placeholder="信息反馈" ng-if="singleAuditing.idcStatus == '' || singleAuditing.idcStatus == '0'" id="idcMessage">
+        <input class="form-control" placeholder="信息反馈" ng-value="singleAuditing.idcStatus" ng-if="singleAuditing.idcStatus != '' && singleAuditing.idcStatus != '0' && singleAuditing.idcStatus != '1'" disabled>
+        <button type="button" class="btn btn-block btn-primary" style="margin-top: 10px;" ng-if="singleAuditing.idcStatus == '' || singleAuditing.idcStatus == '0' " ng-click="auditing(2)">审核</button>
+        <button type="button" class="btn btn-block btn-success" style="margin-top: 10px;" ng-if="singleAuditing.idcStatus == '1'" disabled>审核通过</button>
+        <button type="button" class="btn btn-block btn-danger" style="margin-top: 10px;" ng-if="singleAuditing.idcStatus != '1' && singleAuditing.idcStatus != '' && singleAuditing.idcStatus != '0'" disabled>已驳回</button>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="form-group col-sm-6">
+        <h4>授权书</h4>
+        <img src="{{singleAuditing.authorization}}" style="width: 300px;height: 200px" ng-click="lookBigImg(singleAuditing.authorization)">
+    </div>
+
+    <div class="form-group col-sm-6">
+        <h5>审核</h5>
+        <select id="autType" class="form-control">
+            <option value="0">请选择</option>
+            <option value="1">通过</option>
+            <option value="2">驳回</option>
+        </select>
+        <h5 style="margin-top: 10px">信息反馈</h5>
+        <input class="form-control" placeholder="审核通过" ng-if="singleAuditing.autStatus == '1'" disabled>
+        <input class="form-control" placeholder="信息反馈" ng-if="singleAuditing.autStatus == '' || singleAuditing.autStatus == '0'" id="autMessage">
+        <input class="form-control" placeholder="信息反馈" ng-value="singleAuditing.autStatus" ng-if="singleAuditing.autStatus != '' && singleAuditing.autStatus != '0' && singleAuditing.autStatus != '1'" disabled>
+        <button type="button" class="btn btn-block btn-primary" style="margin-top: 10px;" ng-if="singleAuditing.autStatus == '' || singleAuditing.autStatus == '0' " ng-click="auditing(3)">审核</button>
+        <button type="button" class="btn btn-block btn-success" style="margin-top: 10px;" ng-if="singleAuditing.autStatus == '1'" disabled>审核通过</button>
+        <button type="button" class="btn btn-block btn-danger" style="margin-top: 10px;" ng-if="singleAuditing.autStatus != '1' && singleAuditing.autStatus != '' && singleAuditing.autStatus != '0'" disabled>已驳回</button>
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="form-group col-sm-3">
+        <h4>公司章程</h4>
+        <button type="button" class="btn btn-block btn-warning" style="margin-top: 10px;" ng-click="download(singleAuditing.constitution)">下载</button>
+    </div>
+
+    <div class="form-group col-sm-3">
+        <h5>审核</h5>
+        <select id="conType" class="form-control" style="margin-top:15px">
+            <option value="0">请选择</option>
+            <option value="1">通过</option>
+            <option value="2">驳回</option>
+        </select>
+    </div>
+
+    <div class="form-group col-sm-3">
+        <h5>信息反馈</h5>
+        <input class="form-control" placeholder="审核通过" style="margin-top: 15px;" ng-if="singleAuditing.conStatus == '1'" disabled>
+        <input class="form-control" placeholder="信息反馈" style="margin-top: 15px;" ng-if="singleAuditing.conStatus == '' || singleAuditing.conStatus == '0'" id="conMessage">
+        <input class="form-control" placeholder="信息反馈" style="margin-top: 15px;" ng-value="singleAuditing.conStatus" ng-if="singleAuditing.conStatus != '' && singleAuditing.conStatus != '0' && singleAuditing.conStatus != '1'" disabled>
+    </div>
+
+    <div class="form-group col-sm-3">
+        <h5>审核</h5>
+        <button type="button" class="btn btn-block btn-primary" style="margin-top: 15px;" ng-if="singleAuditing.conStatus == '' || singleAuditing.conStatus == '0' " ng-click="auditing(4)">审核</button>
+        <button type="button" class="btn btn-block btn-success" style="margin-top: 15px;" ng-if="singleAuditing.conStatus == '1'" disabled>审核通过</button>
+        <button type="button" class="btn btn-block btn-danger" style="margin-top: 15px;" ng-if="singleAuditing.conStatus != '1' && singleAuditing.conStatus != '' && singleAuditing.conStatus != '0'" disabled>已驳回</button>
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- 图片缩放加载区(点击周边将显示的图片关闭) 放在外边显示效果较好-->
+<div class="shadeImg" ng-click="closeShadeImg()">
+    <div class=""><img class="showImg" src=""></div>
+</div>
+
+<!-- 图片css -->
+<style type="text/css">
+    .shadeImg{position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 15;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);} /*0.55*/
+    .showImg{width: 400px;
+        height: 500px;
+        margin-top: 140px;
+    }
+</style>

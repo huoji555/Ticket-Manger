@@ -7,6 +7,7 @@ indexApp.config(['$routeProvider',function ($routeProvider) {
                   .when('/adminMessage',{templateUrl:"html/Admin/adminMessage.html",controller:adminMessageController})
                   .when('/tradeMessage',{templateUrl:"html/Trade/TradeMessage.html",controller:tradeMessageController})
                   .when('/auditingBack',{templateUrl:"html/Auditing/auditingBackContent.html",controller:auditingBackController})
+                  .when('/auditingBack/auditing',{templateUrl:"html/Auditing/auditingBackMessage.html",controller:auditingBackMessageController})
 }]);
 
 
@@ -108,13 +109,15 @@ indexApp.controller('indexCon',function ($scope,$http,$window,$rootScope) {
         return false;
     }
 
+    //获取审核信息人的手机号
+    $scope.getAuditingPhone = function(phone){
+        $scope.singleAuditingPhone = phone;
+    }
+
 
     //生成头像图片
     function textToImg(text){
         var ucompany = text;
-        if (ucompany == null) {
-            alert("鸡掰");
-        }
         var company = ucompany.charAt(0);
         var fontSize = 60;
         var fontWeight = 'bold';
@@ -555,7 +558,7 @@ function tradeMessageController($scope,$http,$window,$rootScope,$filter) {
 
 
 
-/*-------------------------后台审核信息--------------------------*/
+/*-------------------------后台审核信息（加载用户表）--------------------------*/
 function auditingBackController($scope,$http,$window,$rootScope) {
 
     var pageSize = 20;
@@ -603,17 +606,191 @@ function auditingBackController($scope,$http,$window,$rootScope) {
         }
     }
 
-    //获取审核信息
-    $scope.getAuditingMessage = function(phone){
-        
-        $http.get('/auditing/getAuditingByPhone?phone='+phone)
-            .then(function (response) {
-                $scope.singleAuditing = response.data.data;
-            })
-        
+
+}
+
+
+
+
+/*-------------------------后台审核信息界面(加载图片)-----------------*/
+function auditingBackMessageController($scope,$http,$window,$rootScope) {
+
+    /*刷新界面时跳回上一层*/
+    $scope.checkAuditingPhone = function () {
+
+        var phone = $scope.singleAuditingPhone;
+
+        if (phone == undefined){
+            $window.location = "/index.html#!/auditingBack";
+        } else {
+
+            $http.get('/auditing/getAuditingByPhone?phone='+phone)
+                .then(function (response) {
+                    $scope.singleAuditing = response.data.data;
+                    $scope.freshSelect(response.data.data);
+                })
+
+        }
     }
-    
-    
+
+    $scope.checkAuditingPhone();
+
+    //查看图片函数
+    $scope.lookBigImg = function (b) {
+        $(".shadeImg").fadeIn(500);
+        $(".showImg").attr("src",b);
+    }
+
+    $scope.closeShadeImg = function () {
+        $(".shadeImg").fadeOut(500);
+    }
+
+    //下载函数
+    $scope.download = function (url) {
+        $window.location = url;
+    }
+
+    //刷新审核界面的选择框
+    $scope.freshSelect = function (singleAuditing) {
+
+        if (singleAuditing.busStatus == '1') {
+            $("#busType").val(1);
+        } else if (singleAuditing.busStatus == '0' || singleAuditing.busStatus == '') {
+            $("#busType").val(0);
+        } else {
+            $("#busType").val(2);
+        }
+
+        if (singleAuditing.autStatus == '1') {
+            $("#autType").val(1);
+        } else if (singleAuditing.autStatus == '0' || singleAuditing.autStatus == '') {
+            $("#autType").val(0);
+        } else {
+            $("#autType").val(2);
+        }
+
+        if (singleAuditing.conStatus == '1') {
+            $("#conType").val(1);
+        } else if (singleAuditing.conStatus == '0' || singleAuditing.conStatus == '') {
+            $("#conType").val(0);
+        } else {
+            $("#conType").val(2);
+        }
+
+        if (singleAuditing.idcStatus == '1') {
+            $("#idcType").val(1);
+        } else if (singleAuditing.idcStatus == '0' || singleAuditing.idcStatus == '') {
+            $("#idcType").val(0);
+        } else {
+            $("#idcType").val(2);
+        }
+
+        if (singleAuditing.orgStatus == '1') {
+            $("#orgType").val(1);
+        } else if (singleAuditing.orgStatus == '0' || singleAuditing.orgStatus == '') {
+            $("#orgType").val(0);
+        } else {
+            $("#orgType").val(2);
+        }
+
+
+    }
+
+    //审核具体人员
+    $scope.auditing = function (type) {
+
+        var status = "";
+
+        if (type == 0) {
+            status = $("#busType").val();
+            if (status == 0) {
+                alert("请选择审核类型");
+                return ;
+            } else if (status == 1) {
+                status == 1;
+            } else if (status == 2){
+                status = $("#busMessage").val();
+                if(status == '0' || status == '1' || status == '2' || status == ''){
+                    alert("非法字段，请重新审核");
+                    return ;
+                }
+            }
+        }
+
+        if (type == 1) {
+            status = $("#orgType").val();
+            if (status == 0) {
+                alert("请选择审核类型");
+                return ;
+            } else if (status == 1) {
+                status == 1;
+            } else if (status == 2){
+                status = $("#orgMessage").val();
+                if(status == '0' || status == '1' || status == '2' || status == ''){
+                    alert("非法字段，请重新审核");
+                    return ;
+                }
+            }
+        }
+
+        if (type == 2) {
+            status = $("#idcType").val();
+            if (status == 0) {
+                alert("请选择审核类型");
+                return ;
+            } else if (status == 1) {
+                status == 1;
+            } else if (status == 2){
+                status = $("#idcMessage").val();
+                if(status == '0' || status == '1' || status == '2' || status == ''){
+                    alert("非法字段，请重新审核");
+                    return ;
+                }
+            }
+        }
+
+        if (type == 3) {
+            status = $("#autType").val();
+            if (status == 0) {
+                alert("请选择审核类型");
+                return ;
+            } else if (status == 1) {
+                status == 1;
+            } else if (status == 2){
+                status = $("#autMessage").val();
+                if(status == '0' || status == '1' || status == '2' || status == ''){
+                    alert("非法字段，请重新审核");
+                    return ;
+                }
+            }
+        }
+
+        if (type == 4) {
+            var status = $("#conType").val();
+            if (status == 0) {
+                alert("请选择审核类型");
+                return ;
+            } else if (status == 1) {
+                status == 1;
+            } else if (status == 2){
+                status = $("#conMessage").val();
+                if(status == '0' || status == '1' || status == '2' || status == ''){
+                    alert("非法字段，请重新审核");
+                    return ;
+                }
+            }
+        }
+
+        var adata = {"type":type,
+                    "status":status,
+                    "phone":$scope.singleAuditingPhone};
+
+        $http.post("/auditing/auditingMember",adata)
+             .then(function (response) {
+                 $scope.checkAuditingPhone();
+             })
+
+    }
 
 }
 
