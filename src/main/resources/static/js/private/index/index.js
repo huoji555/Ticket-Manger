@@ -6,6 +6,7 @@ indexApp.config(['$routeProvider',function ($routeProvider) {
                   .when('/ticketDiscount',{templateUrl:"html/Ticket/ticketDiscountContent.html",controller:ticketDiscountController})
                   .when('/adminMessage',{templateUrl:"html/Admin/adminMessage.html",controller:adminMessageController})
                   .when('/tradeMessage',{templateUrl:"html/Trade/TradeMessage.html",controller:tradeMessageController})
+                  .when('/tradeEntry',{templateUrl:"html/Trade/TradeEntry.html",controller:tradeEntryController})
                   .when('/auditingBack',{templateUrl:"html/Auditing/auditingBackContent.html",controller:auditingBackController})
 }]);
 
@@ -614,6 +615,72 @@ function auditingBackController($scope,$http,$window,$rootScope) {
     }
     
     
+
+}
+
+/*-------------------------信息录入--------------------------*/
+function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
+
+    var now = new Date();
+    var currentDate = $filter('date')(now, "yyyy-MM-dd");
+
+    /*查询日期*/
+    $scope.queryDate = function (queryDate) {
+
+        $http.get('trade/getTradeData?queryDate='+queryDate)
+            .then(function (response) {
+                $scope.lists = response.data.data;
+                if($scope.lists == 0) {
+                    alert("没有当天数据");
+                    return ;
+                }
+            })
+
+    }
+
+    $scope.queryDate(currentDate);
+
+    /*编辑最小利率*/
+    $scope.editMinRate=function(e,index){
+
+        var td = $(e.target);
+        var txt = td.text();
+        var input=$("<input type='text' value='" + txt + "' style='width:82px;height:26px;'/>");
+        td.html(input);
+        //获取焦点后光标在字符串后
+        //其原理就是获得焦点后重新把自己复制粘帖一下
+        input.val("").focus().val(txt);
+        input.blur(function () {
+            var newtxt = $(this).val();
+            td.html(newtxt);
+            $scope.lists[index].minRate=newtxt;
+        })
+
+    }
+
+    /*编辑最大利率*/
+    $scope.editMaxRate=function(e,index){
+
+        var td = $(e.target);
+        var txt = td.text();
+        var input=$("<input type='text' value='" + txt + "' style='width:82px;height:26px;'/>");
+        td.html(input);
+        input.val("").focus().val(txt);
+        input.blur(function () {
+            var newtxt = $(this).val();
+            td.html(newtxt);
+            $scope.lists[index].maxRate=newtxt;
+        })
+
+    }
+
+    /*保存按钮*/
+    $scope.save = function (lists) {
+
+        console.log(lists)
+
+    }
+
 
 }
 
