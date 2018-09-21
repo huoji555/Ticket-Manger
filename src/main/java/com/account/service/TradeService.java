@@ -11,6 +11,13 @@ public interface TradeService {
 
     Trade queryTradeByDateAndTradeType(Date date,String tradeType);
 
+    Trade queryTradeById(Integer id);
+
     List<Trade> queryListByDate(Date date);
+
+    List<Trade> createListByDate();
+
+    void save(Trade trade);
+
 
 }

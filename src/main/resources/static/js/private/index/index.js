@@ -795,6 +795,8 @@ function auditingBackMessageController($scope,$http,$window,$rootScope) {
 
 }
 
+
+
 /*-------------------------信息录入--------------------------*/
 function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
 
@@ -802,15 +804,25 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
     var currentDate = $filter('date')(now, "yyyy-MM-dd");
 
     /*查询日期*/
-    $scope.queryDate = function (queryDate) {
+    $scope.queryDate = function (currentDate) {
 
-        $http.get('trade/getTradeData?queryDate='+queryDate)
+        $http.get('trade/getTradeData?queryDate='+currentDate)
             .then(function (response) {
                 $scope.lists = response.data.data;
                 if($scope.lists == 0) {
-                    alert("没有当天数据");
-                    return ;
+                    $scope.createTrade(currentDate);
+                    $window.location.reload();
                 }
+            })
+
+    }
+
+    //自动生成当前日期的汇率
+    $scope.createTrade = function (currentDate) {
+
+        $http.get('trade/createTradeData?currentDate='+currentDate)
+            .then(function (response) {
+
             })
 
     }
@@ -829,9 +841,9 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
         input.val("").focus().val(txt);
         input.blur(function () {
             var newtxt = $(this).val();
+            if (!checkTrade(newtxt)) {return ;}
             td.html(newtxt);
             $scope.lists[index].minRate=newtxt;
-            console.log(123);
         })
 
     }
@@ -846,6 +858,7 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
         input.val("").focus().val(txt);
         input.blur(function () {
             var newtxt = $(this).val();
+            if (!checkTrade(newtxt)) {return ;}
             td.html(newtxt);
             $scope.lists[index].maxRate=newtxt;
         })
@@ -853,12 +866,50 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
     }
 
     /*保存按钮*/
-    $scope.save = function (lists) {
+    $scope.saveTrade = function (tradeList) {
 
-        console.log(lists)
+        var adata = {"tradeList":tradeList};
+
+        for (let i in tradeList) {
+
+            if (tradeList[i]["minRate"] == null || tradeList[i]["minRate"] == undefined) {
+                alert("录入数据不能为空");
+                return ;
+            }
+
+            if (tradeList[i]["maxRate"] == null || tradeList[i]["maxRate"] == undefined) {
+                alert("录入数据不能为空");
+                return ;
+            }
+
+        }
+
+
+       $http.post("trade/saveTradeData",adata)
+           .then(function (response) {
+               $scope.queryDate(currentDate);
+               alert("修改成功");
+           })
 
     }
 
+    function checkTrade(number) {
+
+        var partrn = /^([0-9]{1,2}[.]{1}[0-9]{1,2})?$/;
+        var result = true;
+
+        if (number == "" || number == undefined) {
+            alert("不能为空");
+            result = false;
+        }
+
+        if ( !partrn.exec(number) ) {
+            alert("非法输入");
+            result = false;
+        }
+
+        return result;
+    }
 
 }
 

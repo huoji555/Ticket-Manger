@@ -1,15 +1,4 @@
 
-<!-- 查询组 -->
-<div class="row">
-    <!--<div class="form-group col-sm-11">
-        <input type="text" class="form-control" placeholder="查询日期" id="calendar"/>
-    </div>
-    <div class="form-group col-sm-1">
-        <span class="input-group-append">
-        <button type="button" class="btn btn-primary" ng-click="queryByDate()">查询</button>
-    </span>
-    </div>-->
-
     <!-- 表格组 -->
     <table class='table table-responsive-xl table-striped table-bordered table-hover'>
         <thead><tr><th>交易类型</th><th>票据类型</th><th>最小利率（%）</th><th>最大利率（%）</th><th>日期</th></tr></thead>
@@ -24,19 +13,5 @@
 
     </table>
 
-    <div class="form-group col-sm-1">
-        <span class="input-group-append">
-        <a  class="btn btn-primary" ng-click="save(lists)">保存</a>
-    </span>
-    </div>
+    <button class="btn btn-primary" style="float: right" ng-click="saveTrade(lists)">保存</button>
 
-
-    <!-- 日历脚本 -->
-    <script>
-
-        laydate.render({
-            elem: '#calendar'
-            ,theme: '#393D49'
-        });
-
-    </script>

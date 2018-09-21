@@ -13,6 +13,8 @@ public interface TradeRepository extends JpaRepository<Trade,String> {
 
     Trade queryTradeByDateAndTradeType(Date date,String tradeType);
 
+    Trade queryTradeById(Integer id);
+
     List<Trade> queryTradesByDate(Date date);
 
 
