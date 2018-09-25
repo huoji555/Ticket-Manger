@@ -22,7 +22,7 @@ public class AuditingTest {
     @Test
     public void queryAuditingByStatus(){
         Pageable pageable = new PageRequest(0,2);
-        Page<Object[]> queryObject = auditingRepository.queryAuditingMessage("12580","1",pageable);
+        Page<Object[]> queryObject = auditingRepository.queryAuditingMessage("12580","1","",pageable);
 
 
         System.out.println("执行了");

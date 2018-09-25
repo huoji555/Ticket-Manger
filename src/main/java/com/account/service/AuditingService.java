@@ -12,6 +12,6 @@ public interface AuditingService {
 
     void saveAndFlush(Auditing auditing);
 
-    Page<Object[]> queryAuditingMessage(String phone, String status, Pageable pageable);
+    Page<Object[]> queryAuditingMessage(String phone, String status, String company, Pageable pageable);
 
 }

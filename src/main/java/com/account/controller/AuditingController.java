@@ -316,7 +316,8 @@ public class AuditingController {
      */
     @GetMapping("queryAuditing")
     public ResultBean<Page<Object[]>> queryAuditingMessage(@RequestParam Integer page,@RequestParam Integer size,
-                                                           @RequestParam String phone,@RequestParam String status) {
+                                                           @RequestParam String phone,@RequestParam String status,
+                                                           @RequestParam String company) {
 
         Pageable pageable = new PageRequest(page,size);
 
@@ -328,9 +329,13 @@ public class AuditingController {
             status = "";
         }
 
-        System.out.println(status+"&&&&&&&&&&&&"+phone);
+        if (null==company && "".equals(company)&& "undefined".equals(company)) {
+            company = "";
+        }
 
-        Page<Object[]> list = auditingService.queryAuditingMessage(phone,status,pageable);
+        System.out.println(status+"&&&&&&&&&&&&"+phone+"&&&&&&&&&"+company);
+
+        Page<Object[]> list = auditingService.queryAuditingMessage(phone,status,company,pageable);
         return new ResultBean<Page<Object[]>>(list);
 
     }

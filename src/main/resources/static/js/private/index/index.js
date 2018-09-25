@@ -565,11 +565,20 @@ function auditingBackController($scope,$http,$window,$rootScope) {
     var pageSize = 20;
     var queryPhone = '';
     var queryStatus = '';
+    var queryCompany = '';
 
     //审核信息分页
     $scope.pagination = function(initPage,pageSize){
 
-        $http.get('/auditing/queryAuditing?page='+initPage+'&size='+pageSize+'&phone='+queryPhone+'&status='+queryStatus)
+        if ($scope.queryPhone != undefined || $scope.queryPhone != null) {
+            queryPhone = $scope.queryPhone;
+        }
+        if ($scope.queryCompany != undefined || $scope.queryCompany != null) {
+            queryCompany = $scope.queryCompany;
+        }
+        queryStatus = $("#queryStatus").val();
+
+        $http.get('/auditing/queryAuditing?page='+initPage+'&size='+pageSize+'&phone='+queryPhone+'&company='+queryCompany+'&status='+queryStatus)
             .then(function (response) {
                 $scope.totalNum = response.data.data.totalElements;//数据总数
                 $scope.pages = response.data.data.totalPages;//页数
@@ -834,14 +843,14 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
 
         var td = $(e.target);
         var txt = td.text();
-        var input=$("<input type='text' value='" + txt + "' style='width:82px;height:26px;'/>");
+        var input=$("<input type='text' autocomplete='off' style='width:82px;height:26px;'/>");
         td.html(input);
         //获取焦点后光标在字符串后
         //其原理就是获得焦点后重新把自己复制粘帖一下
-        input.val("").focus().val(txt);
+        input.focus().val(txt);
         input.blur(function () {
             var newtxt = $(this).val();
-            if (!checkTrade(newtxt)) {return ;}
+            if (!checkTrade(newtxt)) { return ;}
             td.html(newtxt);
             $scope.lists[index].minRate=newtxt;
         })
@@ -853,7 +862,7 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
 
         var td = $(e.target);
         var txt = td.text();
-        var input=$("<input type='text' value='" + txt + "' style='width:82px;height:26px;'/>");
+        var input=$("<input type='text' value='" + txt + "' autocomplete='off' style='width:82px;height:26px;'/>");
         td.html(input);
         input.val("").focus().val(txt);
         input.blur(function () {
@@ -893,17 +902,21 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
 
     }
 
+    /*正则验证*/
     function checkTrade(number) {
 
+        /*var partrn = /^([0-9]{1,2}[.]{1}[0-9]{1,2})?$/;*/
         var partrn = /^([0-9]{1,2}[.]{1}[0-9]{1,2})?$/;
+        var partrn1 = /^[0-9]{1,2}?$/;
         var result = true;
 
-        if (number == "" || number == undefined) {
+
+        /*if (number == "" || number == undefined) {
             alert("不能为空");
             result = false;
-        }
+        }*/
 
-        if ( !partrn.exec(number) ) {
+        if ( !(partrn.exec(number) || partrn1.exec(number)) ) {
             alert("非法输入");
             result = false;
         }

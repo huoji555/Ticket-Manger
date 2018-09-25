@@ -42,7 +42,7 @@ public class AuditingServiceImpl implements AuditingService {
 
     //查询审核信息分页
     @Override
-    public Page<Object[]> queryAuditingMessage(String phone, String status, Pageable pageable) {
-        return auditingRepository.queryAuditingMessage(phone,status,pageable);
+    public Page<Object[]> queryAuditingMessage(String phone, String status, String company, Pageable pageable) {
+        return auditingRepository.queryAuditingMessage(phone,status,company,pageable);
     }
 }

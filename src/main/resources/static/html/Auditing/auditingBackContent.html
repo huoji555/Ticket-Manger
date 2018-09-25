@@ -1,3 +1,32 @@
+<!-- 查询组 -->
+<div class="row">
+    <div class="form-group col-sm-4">
+        <label>手机号</label>
+        <input type="text" class="form-control" ng-model="queryPhone" placeholder="手机号" />
+    </div>
+    <div class="form-group col-sm-4">
+        <label>企业名称</label>
+        <input type="text" class="form-control" ng-model="queryCompany" placeholder="企业名称" />
+    </div>
+    <div class="form-group col-sm-3">
+        <label>审核状态</label>
+        <select id="queryStatus" class="form-control">
+            <option value="">全部</option>
+            <option value="1">通过</option>
+            <option value="0">审核中</option>
+            <option value="2">未上传资料</option>
+        </select>
+    </div>
+    <div class="form-group col-sm-1">
+        <label>查询</label>
+        <span class="input-group-append">
+        <button type="button" class="btn btn-primary" ng-click="pagination(0,20)">查询</button>
+    </span>
+    </div>
+
+</div>
+
+
 
 <!-- 审核表格 -->
 <table class="table table-responsive-xl table-striped table-bordered table-hover">
