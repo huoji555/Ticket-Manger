@@ -22,7 +22,7 @@ public interface TicketDiscountRepository extends JpaRepository<TicketDiscount,S
            "and dis.create_date=(select max(create_date) from ticket_discount where ticket_number=tic.ticket_number) " +
            "where 1=1 "+
            "and tic.uploader = :uploader " +
-           "and (case when :firstDate!='null' and :lastDate!='null' then dis.create_date between :firstDate and (select date_add(:lastDate,interval 1 day)) or tic.uploader = :uploader and dis.create_date is null " +
+           "and (case when :firstDate!='' and :lastDate!='' then dis.create_date between :firstDate and (select date_add(:lastDate,interval 1 day)) or tic.uploader = :uploader and dis.create_date is null " +
            "else dis.create_date between (select date_sub(now(),interval 1 week)) and (select now()) or tic.uploader = :uploader and dis.create_date is null end)",
             nativeQuery = true)
    List<Object[]> queryDisountByDate(@Param("uploader") String uploader, @Param("firstDate") Date firstDate, @Param("lastDate") Date lastDate);
@@ -38,7 +38,7 @@ public interface TicketDiscountRepository extends JpaRepository<TicketDiscount,S
            "and dis.create_date=(select max(create_date) from ticket_discount where ticket_number=tic.ticket_number) " +
            "where 1=1 "+
            "and tic.uploader = :uploader " +
-           "and (case when :firstDate!='null' and :lastDate!='null' then dis.create_date between :firstDate and (select date_add(:lastDate,interval 1 day)) " +
+           "and (case when :firstDate!='' and :lastDate!='' then dis.create_date between :firstDate and (select date_add(:lastDate,interval 1 day)) " +
            "else dis.create_date between (select date_sub(now(),interval 1 week)) and (select now()) end)",
            nativeQuery = true)
    List<Object[]> queryDiscountTotalsByDate(@Param("uploader") String uploader, @Param("firstDate") Date firstDate, @Param("lastDate") Date lastDate);

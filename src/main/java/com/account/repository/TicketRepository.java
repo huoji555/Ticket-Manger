@@ -22,7 +22,7 @@ public interface TicketRepository extends PagingAndSortingRepository<Ticket,Stri
           "where 1=1 " +
           "and uploader=:uploader " +
           "and discount_status=:discountStatus " +
-          "and (case when :firstDate!='null' and :lastDate!='null' then maturity_time between :firstDate and :lastDate " +
+          "and (case when :firstDate!='' and :lastDate!='' then maturity_time between :firstDate and :lastDate " +
           "else maturity_time between (select now()) and (select date_add(now(),interval 1 month)) end )" +
           "order by maturity_time desc ",nativeQuery = true)
   List<Ticket> queryNoneDiscountTotalsByDate(@Param("discountStatus") String discountStatus, @Param("uploader") String uploader,
