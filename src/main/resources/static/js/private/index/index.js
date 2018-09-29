@@ -953,11 +953,9 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
                     if (response.data.data[i][1] == null) {$scope.ticketAmount += 0;}
                     else {$scope.ticketAmount += parseInt(response.data.data[i][1]);}
 
-                    if (response.data.data[i][2] == null) {$scope.discountAmount += 0;}
-                    else {$scope.discountAmount += parseInt(response.data.data[i][2]);}
+                    if (response.data.data[i][3] == 1) {$scope.discountAmount += parseInt(response.data.data[i][2]);}
 
-                    if (response.data.data[i][3] == 1) {$scope.noneDiscountAmount += 0;}
-                    else if (response.data.data[i][3] == 0) {$scope.noneDiscountAmount += parseInt(response.data.data[i][1]);}
+                    if (response.data.data[i][3] == 0) {$scope.noneDiscountAmount += parseInt(response.data.data[i][1]);}
 
                     if (response.data.data[i][4] == null) {$scope.discountCommission += 0;}
                     else {$scope.discountCommission += parseInt(response.data.data[i][4]);}
