@@ -4,6 +4,9 @@ indexApp.config(['$routeProvider',function ($routeProvider) {
     $routeProvider.when('/',{templateUrl:"html/Index/indexContent.html",controller:indexController})
                   .when('/ticketUpload',{templateUrl:"html/Ticket/ticketUploadContent.html",controller:ticketUploadController})
                   .when('/ticketDiscount',{templateUrl:"html/Ticket/ticketDiscountContent.html",controller:ticketDiscountController})
+                  .when('/financeTotals',{templateUrl:"html/Ticket/financeTotalsContent.html",controller:financeTotalsController})
+                  .when('/discountTotals',{templateUrl:"html/Ticket/discountTotalsContent.html",controller:discountTotalsController})
+                  .when('/noneDiscountTotals',{templateUrl:"html/Ticket/noneDiscountTotalsContent.html",controller:noneDiscountTotalsController})
                   .when('/adminMessage',{templateUrl:"html/Admin/adminMessage.html",controller:adminMessageController})
                   .when('/tradeMessage',{templateUrl:"html/Trade/TradeMessage.html",controller:tradeMessageController})
                   .when('/tradeEntry',{templateUrl:"html/Trade/TradeEntry.html",controller:tradeEntryController})
@@ -927,3 +930,128 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
 }
 
 
+
+/*-------------------------财务汇总---------------------------------*/
+function financeTotalsController($scope,$http,$window,$rootScope) {
+
+    /*根据查询日期获取*/
+    $scope.queryFinacceByDate = function () {
+
+        var firstDate = $("#firstDate").val();
+        var lastDate = $("#lastDate").val();
+
+        $http.get('/ticketDiscount/queryFinance?firstDate='+firstDate+'&lastDate='+lastDate)
+            .then(function (response) {
+                $scope.lists = response.data.data;
+                $scope.ticketAmount = 0;
+                $scope.discountAmount = 0;
+                $scope.noneDiscountAmount = 0;
+                $scope.discountCommission = 0;
+
+                for (var i =0;i<response.data.data.length;i++) {
+
+                    if (response.data.data[i][1] == null) {$scope.ticketAmount += 0;}
+                    else {$scope.ticketAmount += parseInt(response.data.data[i][1]);}
+
+                    if (response.data.data[i][2] == null) {$scope.discountAmount += 0;}
+                    else {$scope.discountAmount += parseInt(response.data.data[i][2]);}
+
+                    if (response.data.data[i][3] == 1) {$scope.noneDiscountAmount += 0;}
+                    else if (response.data.data[i][3] == 0) {$scope.noneDiscountAmount += parseInt(response.data.data[i][1]);}
+
+                    if (response.data.data[i][4] == null) {$scope.discountCommission += 0;}
+                    else {$scope.discountCommission += parseInt(response.data.data[i][4]);}
+                }
+
+            })
+
+    }
+
+    $scope.queryFinacceByDate();
+
+    /*获取票据详细信息*/
+    /*$scope.getAllMessageByPhone = function (ticketNumber) {
+
+        $http.get('/ticketDiscount/getAllMessage?ticketNumber='+ticketNumber)
+            .then(function (response) {
+
+                $scope.ticket = response.data.data.ticket;
+                $scope.discount = response.data.data.ticketDiscount;
+        })
+
+    }*/
+
+
+
+}
+
+
+
+/*------------------------ 贴现数据汇总--------------------------------*/
+function discountTotalsController($scope,$http,$window,$rootScope) {
+
+    /*日期查询贴现数据*/
+    $scope.queryDiscountTotals = function () {
+
+        var firstDate = $("#firstDate").val();
+        var lastDate = $("#lastDate").val();
+
+        $http.get('/ticketDiscount/queryDiscount?firstDate='+firstDate+'&lastDate='+lastDate)
+            .then(function (response) {
+                $scope.lists = response.data.data;
+                $scope.ticketAmount = 0;
+                $scope.discountAmount = 0;
+                $scope.discountCommission = 0;
+                $scope.discountPreice = 0;
+
+                for (var i=0; i<response.data.data.length; i++) {
+
+                    if (response.data.data[i][1] == null) {$scope.ticketAmount += 0;}
+                    else {$scope.ticketAmount += parseInt(response.data.data[i][1]);}
+
+                    if (response.data.data[i][2] == null) {$scope.discountAmount += 0;}
+                    else {$scope.discountAmount += parseInt(response.data.data[i][2]);}
+
+                    if (response.data.data[i][3] == null) {$scope.discountCommission += 0;}
+                    else {$scope.discountCommission += parseInt(response.data.data[i][3]);}
+
+                }
+
+        })
+
+    }
+
+    $scope.queryDiscountTotals();
+
+
+}
+
+
+
+/*------------------------ 未贴现数据汇总---------------------------*/
+function noneDiscountTotalsController($scope,$http,$window,$rootScope) {
+
+    /*获取当前贴现数据*/
+    $scope.queryNoneDiscount = function () {
+
+        var firstDate = $("#firstDate").val();
+        var lastDate = $("#lastDate").val();
+
+        $http.get('/ticketDiscount/queryNoneDiscount?firstDate='+firstDate+'&lastDate='+lastDate)
+            .then(function (response) {
+
+                $scope.lists = response.data.data;
+                $scope.ticketAmount = 0;
+
+                for (var i=0; i<response.data.data.length; i++) {
+                    if (response.data.data[i].ticketAmount == null) {$scope.ticketAmount += 0;}
+                    else {$scope.ticketAmount += parseInt(response.data.data[i].ticketAmount);}
+                }
+
+        })
+
+    }
+
+    $scope.queryNoneDiscount();
+    
+}

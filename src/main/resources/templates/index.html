@@ -66,8 +66,9 @@
               <a class="nav-link" href="index.html#!adminMessage" ng-click="changeName('查看信息')">
                 <i class="nav-icon icon-drop"></i> 企业用户</a>
             </li>
-            <li class="nav-title">票据管理</li>
 
+            <!--票据管理模块-->
+            <li class="nav-title">票据管理</li>
             <li class="nav-item">
               <a class="nav-link" href="index.html#!/ticketUpload" ng-click="changeName('票据导入')">
                 <i class="nav-icon icon-pie-chart"></i> 票据导入</a>
@@ -81,7 +82,23 @@
                 <i class="nav-icon icon-star"></i> 当日市场票价</a>
             </li>
 
+            <!--财务汇总模块-->
+            <li class="nav-title">财务分析</li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#!/financeTotals" ng-click="changeName('财务汇总')">
+                <i class="nav-icon icon-pie-chart"></i> 财务汇总</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#!/discountTotals" ng-click="changeName('已贴现统计')">
+                <i class="nav-icon icon-pie-chart"></i> 已贴现统计</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#!/noneDiscountTotals" ng-click="changeName('未贴现统计')">
+                <i class="nav-icon icon-pie-chart"></i> 未贴现统计</a>
+            </li>
 
+
+            <!-- 后台管理模块 -->
             <li class="nav-title" ng-show="roleId=='1'">后台管理</li>
             <li class="nav-item" ng-show="roleId=='1'">
               <a class="nav-link" href="index.html#!/auditingBack" ng-click="changeName('企业审核')">

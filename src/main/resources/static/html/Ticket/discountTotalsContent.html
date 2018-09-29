@@ -1,0 +1,50 @@
+<!-- 查询组 -->
+<div class="row">
+    <div class="form-group col-sm-5">
+        <input type="text" class="form-control" placeholder="起始日期" id="firstDate"/>
+    </div>
+    <div class="form-group col-sm-5">
+        <input type="text" class="form-control" placeholder="截止日期" id="lastDate"/>
+    </div>
+    <div class="form-group col-sm-2">
+        <span class="input-group-append">
+        <button type="button" class="btn btn-primary" ng-click="queryDiscountTotals()">查询</button>
+    </span>
+    </div>
+</div>
+
+<table class='table table-responsive-xl table-striped table-bordered table-hover'>
+    <thead><th>票据号码</th><th>票面金额(两位小数)</th><th>贴现金额(两位小数)</th><th>手续费(两位小数)</th><th>贴现价格(%)</th><th>贴现类型</th><th>贴现方</th><th>贴现日期</th></thead>
+
+    <tr ng-repeat="list in lists">
+        <td>{{list[0]}}</td>
+        <td>{{list[1] | number:2}}</td>
+        <td>{{list[2] | number:2}}</td>
+        <td>{{list[3] | number:2}}</td>
+        <td>{{list[4] | number:2}}</td>
+        <td ng-if="list[5] == 1">贴现买断</td>
+        <td ng-if="list[5] == 2">贴现复查</td>
+        <td ng-if="list[5] == 3">质押</td>
+        <td>{{list[6]}}</td>
+        <td>{{list[7] | date:'yyyy-MM-dd'}}</td>
+    </tr>
+
+    <tr class="font-weight-bold"><td>总计</td><td>{{ticketAmount | number:2}}</td><td>{{discountAmount | number:2}}</td><td>{{discountCommission | number:2}}</td><td></td><td></td><td></td><td></td></tr>
+
+</table>
+
+
+<!-- 日历脚本 -->
+<script>
+
+    laydate.render({
+        elem: '#firstDate',
+        theme: '#393D49'
+    });
+
+    laydate.render({
+        elem: '#lastDate',
+        theme: '#393D49'
+    });
+
+</script>

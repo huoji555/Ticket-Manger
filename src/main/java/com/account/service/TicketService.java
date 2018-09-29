@@ -3,6 +3,9 @@ package com.account.service;
 import com.account.entity.Ticket;
 import org.springframework.data.domain.Page;
 
+import java.util.Date;
+import java.util.List;
+
 public interface TicketService {
 
     void save(Ticket ticket);                                       //保存
@@ -13,6 +16,8 @@ public interface TicketService {
 
     Ticket queryTicketByTicketNumberAndUploader(String ticketNumber,String uploder);
 
-    Page<Ticket>  queryTicket(Integer page, Integer size, String ticketNumber, String ticketName, String billerName, String uploader);          //票据查询
+    Page<Ticket>  queryTicket(Integer page, Integer size, String ticketNumber, String ticketName, String billerName, String uploader);//票据查询
+
+    List<Ticket> queryNoneDiscountTotalsByDate(String discountStatus, String uploader, Date firstDate, Date lastDate);    //查询未贴现票据
 
 }

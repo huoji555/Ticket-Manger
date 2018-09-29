@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -90,6 +91,11 @@ public class TicketServiceImpl implements TicketService {
         };
 
         return ticketRepository.findAll(spec,pageRequest);
+    }
+
+    @Override
+    public List<Ticket> queryNoneDiscountTotalsByDate(String discountStatus, String uploader, Date firstDate, Date lastDate) {
+        return ticketRepository.queryNoneDiscountTotalsByDate(discountStatus, uploader, firstDate, lastDate);
     }
 
 
