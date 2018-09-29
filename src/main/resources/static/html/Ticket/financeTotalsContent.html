@@ -21,8 +21,9 @@
     <tr ng-repeat="list in lists">
         <td>{{list[0]}}</td>
         <td>{{list[1] | number:2}}</td>
-        <td>{{list[2] | number:2}}</td>
+        <td ng-if="list[3] == 0"></td>
         <td ng-if="list[3] == 0">{{list[1] | number:2}}</td>
+        <td ng-if="list[3] == 1">{{list[2] | number:2}}</td>
         <td ng-if="list[3] == 1"></td>
         <td>{{list[4] | number:2}}</td>
         <!--<td><a data-target="#detail" data-toggle="modal" class="badge badge-warning" ng-click="getAllMessageByPhone(list[0])">详情</a></td>-->
