@@ -17,7 +17,7 @@
 
 <!-- 表格组 -->
 <table class='table table-responsive-xl table-striped table-bordered table-hover'>
-    <thead><tr><th>票据号码 </th><th>票面金额(两位小数) </th><th>已贴现金额(两位小数) </th><th>未贴现金额(两位小数) </th><th>已贴现手续费(两位小数) </th></tr></thead>
+    <thead><tr><th>票据号码 </th><th>票面金额 </th><th>已贴现金额 </th><th>未贴现金额 </th><th>已贴现手续费 </th></tr></thead>
 
     <tr ng-repeat="list in lists">
         <td>{{list[0]}}</td>
@@ -40,39 +40,6 @@
     </tr>
 
 </table>
-
-
-
-<!-- 查看信息模态框 -->
-<!--<div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-    <div class="modal-dialog modal-warning modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">显示信息</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <table class='table table-responsive-xl table-striped table-bordered table-hover'>
-                    <tr><td>票据号码</td><td>{{ticket.ticketNumber}}</td><td>票面金额</td><td>{{ticket.ticketAmount | number:2}}</td><td>票据类型</td><td>{{ticket.ticketType}}</td></tr>
-                    <tr><td>票据名称</td><td>{{ticket.ticketName}}</td><td>不可转让标识</td><td>{{ticket.nonTransferLogo}}</td><td>不可转让标识名称</td><td>{{ticket.nonTransferLogoName}}</td></tr>
-                    <tr><td>出票时间</td><td>{{ticket.ticketingTime | date:'yyyy-MM-dd'}}</td><td>到期时间</td><td>{{ticket.maturityTime | date:'yyyy-MM-dd'}}</td><td>贴现方</td><td>{{discount.discountParty}}</td></tr>
-                    <tr><td>收票人名称</td><td>{{ticket.invoiceName}}</td><td>承兑人名称</td><td>{{ticket.acceptorName}}</td><td>贴现价格</td><td>{{discount.discountPreice | number:2}}</td></tr>
-                    <tr><td>下手持票人名称</td><td>{{ticket.handheldName}}</td><td>下手持票人账号</td><td>{{ticket.handheldAccountNumber}}</td><td>贴现金额</td><td>{{discount.discountAmount | number:2}}</td></tr>
-                    <tr><td>本手持票人名称</td><td>{{ticket.originalHandheldName}}</td><td>本手持票人行号</td><td>{{ticket.originalHandheldBankNumber}}</td><td>手续费</td><td>{{discount.commission | number:2}}</td></tr>
-                    <tr><td>出票人名称</td><td>{{ticket.billerName}}</td><td>下手持票人行号</td><td>{{ticket.handheldBankNumber}}</td><td>贴现类型</td><td ng-if="discount.discountType == 1">贴现买断</td><td ng-if="discount.discountType == 2">贴现复查</td><td ng-if="discount.discountType == 3">质押</td><td ng-if="discount.discountType != 1 && discount.discountType != 2 && discount.discountType != 3"></td></tr>
-                    <tr><td>票据状态</td><td>{{ticket.ticketStatus}}</td><td>在池状态</td><td>{{ticket.poolStatus}}</td><td>贴现日期</td><td>{{discount.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td></tr>
-                </table>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>&lt;!&ndash; /.modal-content &ndash;&gt;
-    </div>&lt;!&ndash; /.modal-dialog &ndash;&gt;
-</div>&lt;!&ndash; /.modal &ndash;&gt;-->
 
 
 

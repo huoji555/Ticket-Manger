@@ -973,7 +973,7 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
 
         var firstDate = $("#firstDate").val();
         var lastDate = $("#lastDate").val();
-        let str = '票据号码,票面金额(两位小数),已贴现金额(两位小数),未贴现金额(两位小数),已贴现手续费(两位小数)\n';
+        let str = '票据号码,票面金额,已贴现金额,未贴现金额,已贴现手续费\n';
 
         $http.get('/ticketDiscount/queryFinance?firstDate='+firstDate+'&lastDate='+lastDate)
             .then(function (response) {
@@ -1038,7 +1038,7 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
 
 
 /*------------------------ 贴现数据汇总--------------------------------*/
-function discountTotalsController($scope,$http,$window,$rootScope) {
+function discountTotalsController($scope,$http,$window,$rootScope,$filter) {
 
     /*日期查询贴现数据*/
     $scope.queryDiscountTotals = function () {
@@ -1077,7 +1077,7 @@ function discountTotalsController($scope,$http,$window,$rootScope) {
 
         var firstDate = $("#firstDate").val();
         var lastDate = $("#lastDate").val();
-        let str = '票据号码,票面金额(两位小数),贴现金额(两位小数),手续费(两位小数),贴现价格(两位小数),贴现类型,贴现方,贴现日期\n';
+        let str = '票据号码,票面金额,贴现金额,手续费,贴现价格(%),贴现类型,贴现方,贴现日期\n';
 
         $http.get('/ticketDiscount/queryDiscount?firstDate='+firstDate+'&lastDate='+lastDate)
             .then(function (response) {
@@ -1109,7 +1109,8 @@ function discountTotalsController($scope,$http,$window,$rootScope) {
                             if (jsonData[i][item] == 3) {str += `${'质押\t'},`; }
                             else {str += `${'\t'},`; }
                         } else if (item == 7) {
-                            var date = new Date(parseInt(jsonData[i][item])).toLocaleString().replace(/:\d{1,2}$/,' ');
+                            var time = new Date(parseInt(jsonData[i][item]));
+                            var date = $filter('date')(time, "yyyy-MM-dd HH:mm:ss");
                             str += `${date + '\t'},`;
                         } else {
                             if (jsonData[i][item] == null) {str += `${'\t'},`; } else {
@@ -1146,7 +1147,7 @@ function discountTotalsController($scope,$http,$window,$rootScope) {
 
 
 /*------------------------ 未贴现数据汇总---------------------------*/
-function noneDiscountTotalsController($scope,$http,$window,$rootScope) {
+function noneDiscountTotalsController($scope,$http,$window,$rootScope,$filter) {
 
     /*获取当前贴现数据*/
     $scope.queryNoneDiscount = function () {
@@ -1175,7 +1176,7 @@ function noneDiscountTotalsController($scope,$http,$window,$rootScope) {
 
         var firstDate = $("#firstDate").val();
         var lastDate = $("#lastDate").val();
-        let str = '票据号码,票面金额(两位小数),票据类型,票据名称,出票日期,到期日期,出票人,承兑人名称\n';
+        let str = '票据号码,票面金额,票据类型,票据名称,出票日期,到期日期,出票人,承兑人名称\n';
 
         $http.get('/ticketDiscount/queryNoneDiscount?firstDate='+firstDate+'&lastDate='+lastDate)
             .then(function (response) {
@@ -1188,7 +1189,6 @@ function noneDiscountTotalsController($scope,$http,$window,$rootScope) {
                     else {$scope.ticketAmount += parseInt(response.data.data[i].ticketAmount);}
                 }
 
-                alert(jsonData[0].ticketNumber);
                 //添加数据
                 for(let i = 0 ; i < jsonData.length ; i++ ){
 
@@ -1197,10 +1197,12 @@ function noneDiscountTotalsController($scope,$http,$window,$rootScope) {
                     if (jsonData[i].ticketType != null) {str += `${jsonData[i].ticketType + '\t'},`;}
                     if (jsonData[i].ticketName != null) {str += `${jsonData[i].ticketName + '\t'},`;}
                     if (jsonData[i].ticketingTime != null) {
-                        var date = new Date( parseInt( jsonData[i].ticketingTime) ).toLocaleString().replace(/:\d{1,2}$/,' ');
+                        var time = new Date( parseInt( jsonData[i].ticketingTime) );
+                        var date = $filter('date')(time, "yyyy-MM-dd");
                         str += `${date + '\t'},`;}
                     if (jsonData[i].maturityTime != null) {
-                        var date = new Date( parseInt( jsonData[i].maturityTime) ).toLocaleString().replace(/:\d{1,2}$/,' ');
+                        var time = new Date( parseInt( jsonData[i].maturityTime) );
+                        var date = $filter('date')(time, "yyyy-MM-dd");
                         str += `${date + '\t'},`;}
                     if (jsonData[i].billerName != null) {str += `${jsonData[i].billerName + '\t'},`;}
                     if (jsonData[i].acceptorName != null) {str += `${jsonData[i].acceptorName + '\t'}`;}
