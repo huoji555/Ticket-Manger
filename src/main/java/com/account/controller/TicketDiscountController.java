@@ -2,9 +2,12 @@ package com.account.controller;
 
 import com.account.entity.Ticket;
 import com.account.entity.TicketDiscount;
+import com.account.entity.Trade;
 import com.account.repository.TicketRepository;
 import com.account.service.TicketDiscountService;
 import com.account.service.TicketService;
+import com.account.service.TradeService;
+import com.account.util.ExcelExport;
 import com.account.util.ResultBean;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +30,10 @@ public class TicketDiscountController {
     private TicketService ticketService;
     @Autowired
     private TicketDiscountService ticketDiscountService;
+    @Autowired
+    private TradeService tradeService;
+    @Autowired
+    private ExcelExport excelExport;
 
 
     /**
@@ -139,10 +147,6 @@ public class TicketDiscountController {
             list = ticketDiscountService.queryDicountByDate(uploader,firstDate1,lastDate1);
         }
 
-        System.out.println(firstDate+"&&&&&&&&"+lastDate+"&&&&&&&"+uploader);
-
-
-
         return new ResultBean<List<Object[]>>(list);
 
     }
@@ -244,7 +248,6 @@ public class TicketDiscountController {
 
         return new ResultBean<Map<String,Object>>(result);
     }
-
 
 
 }

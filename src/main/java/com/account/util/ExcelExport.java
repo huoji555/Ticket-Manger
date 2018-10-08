@@ -1,5 +1,6 @@
 package com.account.util;
 
+import com.sun.xml.internal.bind.v2.runtime.output.Encoded;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 @Component
 public class ExcelExport {
@@ -22,16 +24,16 @@ public class ExcelExport {
      * @param values
      * @param wb
      */
-    public void excelExport(String sheetName, String title[], String values[][],
-                            HttpServletResponse response, String fileName) throws Exception{
+    public void excelExport(String sheetName, String title[], String values[][]) throws Exception{
 
         try {
-            //setResponseHeader(response,fileName);
-            //OutputStream os = response.getOutputStream();
+            /*setResponseHeader(response,fileName);
+            OutputStream os = response.getOutputStream();*/
             OutputStream os = new FileOutputStream("D:/student.xls");
             HSSFWorkbook wb = getWorkBook(sheetName, title, values);
 
             wb.write(os);
+            os.write(wb.getBytes());
             os.flush();
             os.close();
         } catch (Exception e) {
@@ -51,7 +53,7 @@ public class ExcelExport {
      * @param wb
      * @return
      */
-    public static HSSFWorkbook getWorkBook(String sheetName, String title[], String values[][]) {
+    public static HSSFWorkbook getWorkBook(String sheetName, String title[], String values[][]) throws Exception{
 
         HSSFWorkbook wb = new HSSFWorkbook();
 
@@ -97,14 +99,19 @@ public class ExcelExport {
     public static void setResponseHeader(HttpServletResponse response, String fileName) throws Exception{
         try {
             try {
-                fileName = new String(fileName.getBytes(),"utf-8");
+                fileName = new String(fileName.getBytes(),"UTF-8");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            response.setContentType("application/octet-stream;charset=utf-8");
-            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
+            response.setContentType("application/octet-stream;application/vnd.ms-excel;charset=GB2312");
+            response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName,"UTF-8"));
             response.addHeader("Pargam", "no-cache");
             response.addHeader("Cache-Control", "no-cache");
+            response.setCharacterEncoding("GB2312");
+            /*response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            response.setDateHeader("Expires", (System.currentTimeMillis() + 1000));*/
+            //response.setContentType("application/vnd.ms-excel");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

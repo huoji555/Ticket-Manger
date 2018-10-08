@@ -934,6 +934,7 @@ function tradeEntryController($scope,$http,$window,$rootScope,$filter) {
 /*-------------------------财务汇总---------------------------------*/
 function financeTotalsController($scope,$http,$window,$rootScope) {
 
+
     /*根据查询日期获取*/
     $scope.queryFinacceByDate = function () {
 
@@ -965,21 +966,72 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
 
     }
 
-    $scope.queryFinacceByDate();
 
-    /*获取票据详细信息*/
-    /*$scope.getAllMessageByPhone = function (ticketNumber) {
 
-        $http.get('/ticketDiscount/getAllMessage?ticketNumber='+ticketNumber)
+    /*前端导出excel表格*/
+    $scope.tableToExcel = function () {
+
+        var firstDate = $("#firstDate").val();
+        var lastDate = $("#lastDate").val();
+        let str = '票据号码,票面金额(两位小数),已贴现金额(两位小数),未贴现金额(两位小数),已贴现手续费(两位小数)\n';
+
+        $http.get('/ticketDiscount/queryFinance?firstDate='+firstDate+'&lastDate='+lastDate)
             .then(function (response) {
+                var jsonData = response.data.data;
+                $scope.ticketAmount = 0;
+                $scope.discountAmount = 0;
+                $scope.noneDiscountAmount = 0;
+                $scope.discountCommission = 0;
 
-                $scope.ticket = response.data.data.ticket;
-                $scope.discount = response.data.data.ticketDiscount;
-        })
+                for (var i =0;i<response.data.data.length;i++) {
 
-    }*/
+                    if (response.data.data[i][1] == null) {$scope.ticketAmount += 0;}
+                    else {$scope.ticketAmount += parseInt(response.data.data[i][1]);}
+
+                    if (response.data.data[i][3] == 1) {$scope.discountAmount += parseInt(response.data.data[i][2]);}
+
+                    if (response.data.data[i][3] == 0) {$scope.noneDiscountAmount += parseInt(response.data.data[i][1]);}
+
+                    if (response.data.data[i][4] == null) {$scope.discountCommission += 0;}
+                    else {$scope.discountCommission += parseInt(response.data.data[i][4]);}
+                }
 
 
+                //增加\t为了不让表格显示科学计数法或者其他格式
+                for(let i = 0 ; i < jsonData.length ; i++ ){
+                    for(let item in jsonData[i]){
+                        if (item == 3) {
+                            if (jsonData[i][3] == 0) {str+=`${jsonData[i][1] + '\t'},`; }
+                        } else {
+                            if (jsonData[i][item] == null) {str+=`${'\t'},`; } else {
+                                str+=`${jsonData[i][item] + '\t'},`;
+                            }
+                        }
+                    }
+                    str+='\n';
+                }
+
+                str += `总计,`;
+                str += $scope.ticketAmount+"\t,"+$scope.discountAmount+"\t,"+$scope.noneDiscountAmount+"\t,"+$scope.discountCommission+"\t\n";
+
+                // encodeURIComponent解决中文乱码
+                let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+                // 通过创建a标签实现
+                var link = document.createElement("a");
+                link.href = uri;
+                //对下载的文件命名
+                link.download =  "财务汇总.csv";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            })
+
+
+
+    }
+
+    $scope.queryFinacceByDate();
 
 }
 
@@ -1019,6 +1071,73 @@ function discountTotalsController($scope,$http,$window,$rootScope) {
 
     }
 
+
+    /*未贴现数据以excel形式导出*/
+    $scope.discountToExcel = function() {
+
+        var firstDate = $("#firstDate").val();
+        var lastDate = $("#lastDate").val();
+        let str = '票据号码,票面金额(两位小数),贴现金额(两位小数),手续费(两位小数),贴现价格(两位小数),贴现类型,贴现方,贴现日期\n';
+
+        $http.get('/ticketDiscount/queryDiscount?firstDate='+firstDate+'&lastDate='+lastDate)
+            .then(function (response) {
+                var jsonData = response.data.data;
+                $scope.ticketAmount = 0;
+                $scope.discountAmount = 0;
+                $scope.discountCommission = 0;
+                $scope.discountPreice = 0;
+
+                for (var i=0; i<response.data.data.length; i++) {
+
+                    if (response.data.data[i][1] == null) {$scope.ticketAmount += 0;}
+                    else {$scope.ticketAmount += parseInt(response.data.data[i][1]);}
+
+                    if (response.data.data[i][2] == null) {$scope.discountAmount += 0;}
+                    else {$scope.discountAmount += parseInt(response.data.data[i][2]);}
+
+                    if (response.data.data[i][3] == null) {$scope.discountCommission += 0;}
+                    else {$scope.discountCommission += parseInt(response.data.data[i][3]);}
+
+                }
+
+                //增加\t为了不让表格显示科学计数法或者其他格式
+                for(let i = 0 ; i < jsonData.length ; i++ ){
+                    for(let item in jsonData[i]){
+                        if (item == 5) {
+                            if (jsonData[i][item] == 1) {str += `${'贴现买断\t'},`; } else
+                            if (jsonData[i][item] == 2) {str += `${'贴现复查\t'},`; } else
+                            if (jsonData[i][item] == 3) {str += `${'质押\t'},`; }
+                            else {str += `${'\t'},`; }
+                        } else if (item == 7) {
+                            var date = new Date(parseInt(jsonData[i][item])).toLocaleString().replace(/:\d{1,2}$/,' ');
+                            str += `${date + '\t'},`;
+                        } else {
+                            if (jsonData[i][item] == null) {str += `${'\t'},`; } else {
+                                str += `${jsonData[i][item] + '\t'},`;
+                            }
+                        }
+                    }
+                    str+='\n';
+                }
+
+                str += `总计,`;
+                str += $scope.ticketAmount+"\t,"+$scope.discountAmount+"\t,"+$scope.discountCommission+"\t\n";
+
+                // encodeURIComponent解决中文乱码
+                let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+                // 通过创建a标签实现
+                var link = document.createElement("a");
+                link.href = uri;
+                //对下载的文件命名
+                link.download =  "已贴现票据.csv";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            })
+
+    }
+
     $scope.queryDiscountTotals();
 
 
@@ -1050,6 +1169,64 @@ function noneDiscountTotalsController($scope,$http,$window,$rootScope) {
 
     }
 
+
+    /*未贴现数据导出为excel表格*/
+    $scope.noneDiscountToExcel = function () {
+
+        var firstDate = $("#firstDate").val();
+        var lastDate = $("#lastDate").val();
+        let str = '票据号码,票面金额(两位小数),票据类型,票据名称,出票日期,到期日期,出票人,承兑人名称\n';
+
+        $http.get('/ticketDiscount/queryNoneDiscount?firstDate='+firstDate+'&lastDate='+lastDate)
+            .then(function (response) {
+
+                var jsonData = response.data.data;
+                $scope.ticketAmount = 0;
+
+                for (var i=0; i<response.data.data.length; i++) {
+                    if (response.data.data[i].ticketAmount == null) {$scope.ticketAmount += 0;}
+                    else {$scope.ticketAmount += parseInt(response.data.data[i].ticketAmount);}
+                }
+
+                alert(jsonData[0].ticketNumber);
+                //添加数据
+                for(let i = 0 ; i < jsonData.length ; i++ ){
+
+                    if (jsonData[i].ticketNumber != null) {str += `${jsonData[i].ticketNumber + '\t'},`;}
+                    if (jsonData[i].ticketAmount != null) {str += `${jsonData[i].ticketAmount + '\t'},`;}
+                    if (jsonData[i].ticketType != null) {str += `${jsonData[i].ticketType + '\t'},`;}
+                    if (jsonData[i].ticketName != null) {str += `${jsonData[i].ticketName + '\t'},`;}
+                    if (jsonData[i].ticketingTime != null) {
+                        var date = new Date( parseInt( jsonData[i].ticketingTime) ).toLocaleString().replace(/:\d{1,2}$/,' ');
+                        str += `${date + '\t'},`;}
+                    if (jsonData[i].maturityTime != null) {
+                        var date = new Date( parseInt( jsonData[i].maturityTime) ).toLocaleString().replace(/:\d{1,2}$/,' ');
+                        str += `${date + '\t'},`;}
+                    if (jsonData[i].billerName != null) {str += `${jsonData[i].billerName + '\t'},`;}
+                    if (jsonData[i].acceptorName != null) {str += `${jsonData[i].acceptorName + '\t'}`;}
+
+                    str+='\n';
+                }
+
+                str += `总计,`;
+                str += $scope.ticketAmount+"\t\n";
+
+                // encodeURIComponent解决中文乱码
+                let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+                // 通过创建a标签实现
+                var link = document.createElement("a");
+                link.href = uri;
+                //对下载的文件命名
+                link.download =  "未贴现统计.csv";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            })
+
+    }
+
+
     $scope.queryNoneDiscount();
-    
+
 }
