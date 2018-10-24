@@ -1000,20 +1000,27 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
                 //增加\t为了不让表格显示科学计数法或者其他格式
                 for(let i = 0 ; i < jsonData.length ; i++ ){
                     for(let item in jsonData[i]){
-                        if (item == 3) {
-                            if (jsonData[i][3] == 0) {str+=`${jsonData[i][1] + '\t'},`; }
+                        if (item == 2) {
+                            if (jsonData[i][3] == 0) {str+= "\t,";}
+                            else if (jsonData[i][3] == 1) {str+= jsonData[i][2] + "\t,";}
+                        } else if (item == 3) {
+                            if (jsonData[i][3] == 0) {str+= jsonData[i][1] + "\t,";}
+                            else if (jsonData[i][3] == 1){str+= "\t,";}
                         } else {
-                            if (jsonData[i][item] == null) {str+=`${'\t'},`; } else {
-                                str+=`${jsonData[i][item] + '\t'},`;
-                            }
+                            if (jsonData[i][item] == null) {str+= "\t,";
+                            } else {str+= jsonData[i][item] + "\t,";}
                         }
                     }
-                    str+='\n';
+                    str+="\n";
                 }
 
-                str += `总计,`;
+                str += "总计,";
                 str += $scope.ticketAmount+"\t,"+$scope.discountAmount+"\t,"+$scope.noneDiscountAmount+"\t,"+$scope.discountCommission+"\t\n";
 
+                if (checkExp() == "IE") {
+                    alert("不支持IE浏览器下载，请尝试别的浏览器");
+                    return ;
+                }
                 // encodeURIComponent解决中文乱码
                 let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
                 // 通过创建a标签实现
@@ -1026,8 +1033,6 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
                 document.body.removeChild(link);
 
             })
-
-
 
     }
 
@@ -1104,25 +1109,30 @@ function discountTotalsController($scope,$http,$window,$rootScope,$filter) {
                 for(let i = 0 ; i < jsonData.length ; i++ ){
                     for(let item in jsonData[i]){
                         if (item == 5) {
-                            if (jsonData[i][item] == 1) {str += `${'贴现买断\t'},`; } else
-                            if (jsonData[i][item] == 2) {str += `${'贴现复查\t'},`; } else
-                            if (jsonData[i][item] == 3) {str += `${'质押\t'},`; }
-                            else {str += `${'\t'},`; }
+                            if (jsonData[i][item] == 1) {str += "贴现买断\t,"; } else
+                            if (jsonData[i][item] == 2) {str += "贴现复查\t,"; } else
+                            if (jsonData[i][item] == 3) {str += "质押\t,"; }
+                            else {str += "\t,"; }
                         } else if (item == 7) {
                             var time = new Date(parseInt(jsonData[i][item]));
                             var date = $filter('date')(time, "yyyy-MM-dd HH:mm:ss");
-                            str += `${date + '\t'},`;
+                            str += date + "\t,";
                         } else {
-                            if (jsonData[i][item] == null) {str += `${'\t'},`; } else {
-                                str += `${jsonData[i][item] + '\t'},`;
+                            if (jsonData[i][item] == null) {str += "\t,"; } else {
+                                str += jsonData[i][item] + "\t,";
                             }
                         }
                     }
-                    str+='\n';
+                    str+="\n";
                 }
 
-                str += `总计,`;
+                str += "总计,";
                 str += $scope.ticketAmount+"\t,"+$scope.discountAmount+"\t,"+$scope.discountCommission+"\t\n";
+
+                if (checkExp() == "IE") {
+                    alert("不支持IE浏览器下载，请尝试别的浏览器");
+                    return ;
+                }
 
                 // encodeURIComponent解决中文乱码
                 let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
@@ -1192,26 +1202,31 @@ function noneDiscountTotalsController($scope,$http,$window,$rootScope,$filter) {
                 //添加数据
                 for(let i = 0 ; i < jsonData.length ; i++ ){
 
-                    if (jsonData[i].ticketNumber != null) {str += `${jsonData[i].ticketNumber + '\t'},`;}
-                    if (jsonData[i].ticketAmount != null) {str += `${jsonData[i].ticketAmount + '\t'},`;}
-                    if (jsonData[i].ticketType != null) {str += `${jsonData[i].ticketType + '\t'},`;}
-                    if (jsonData[i].ticketName != null) {str += `${jsonData[i].ticketName + '\t'},`;}
+                    if (jsonData[i].ticketNumber != null) {str += jsonData[i].ticketNumber + "\t,";}
+                    if (jsonData[i].ticketAmount != null) {str += jsonData[i].ticketAmount + "\t,";}
+                    if (jsonData[i].ticketType != null) {str += jsonData[i].ticketType + "\t,";}
+                    if (jsonData[i].ticketName != null) {str += jsonData[i].ticketName + "\t,";}
                     if (jsonData[i].ticketingTime != null) {
                         var time = new Date( parseInt( jsonData[i].ticketingTime) );
                         var date = $filter('date')(time, "yyyy-MM-dd");
-                        str += `${date + '\t'},`;}
+                        str += date + "\t,";}
                     if (jsonData[i].maturityTime != null) {
                         var time = new Date( parseInt( jsonData[i].maturityTime) );
                         var date = $filter('date')(time, "yyyy-MM-dd");
-                        str += `${date + '\t'},`;}
-                    if (jsonData[i].billerName != null) {str += `${jsonData[i].billerName + '\t'},`;}
-                    if (jsonData[i].acceptorName != null) {str += `${jsonData[i].acceptorName + '\t'}`;}
+                        str += date + "\t,";}
+                    if (jsonData[i].billerName != null) {str += jsonData[i].billerName + "\t,";}
+                    if (jsonData[i].acceptorName != null) {str += jsonData[i].acceptorName + "\t,";}
 
-                    str+='\n';
+                    str+="\n";
                 }
 
-                str += `总计,`;
+                str += "总计,";
                 str += $scope.ticketAmount+"\t\n";
+
+                if (checkExp() == "IE") {
+                    alert("不支持IE浏览器下载，请尝试别的浏览器");
+                    return ;
+                }
 
                 // encodeURIComponent解决中文乱码
                 let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
@@ -1231,4 +1246,14 @@ function noneDiscountTotalsController($scope,$http,$window,$rootScope,$filter) {
 
     $scope.queryNoneDiscount();
 
+}
+
+
+//判断浏览器是不是IE
+function checkExp(){
+    if ( navigator.userAgent.match(/rv:(\d+)\..*/) ){
+        return "IE";
+    } else {
+        return "NotIE";
+    }
 }
