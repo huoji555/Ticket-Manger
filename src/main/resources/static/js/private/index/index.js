@@ -1019,6 +1019,7 @@ function financeTotalsController($scope,$http,$window,$rootScope) {
 
                 if (checkExp() == "IE") {
                     alert("不支持IE浏览器下载，请尝试别的浏览器");
+                    $window.open('data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str));
                     return ;
                 }
                 // encodeURIComponent解决中文乱码
