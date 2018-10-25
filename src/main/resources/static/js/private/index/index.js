@@ -141,6 +141,14 @@ indexApp.controller('indexCon',function ($scope,$http,$window,$rootScope) {
         $('.img-avatar').attr('src',canvas.toDataURL("image/png"));
     };
 
+    //提示IE用户
+    function ieMsg() {
+        if (checkExp() == "IE") {
+            $scope.ieMsg = "(不支持IE浏览器下载，请尝试别的浏览器)";
+        }
+    }
+
+    ieMsg();
 });
 
 function indexController($scope,$http,$window,$rootScope) {
